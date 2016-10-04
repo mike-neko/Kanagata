@@ -106,6 +106,19 @@ class JSON {
         try self.init(data: data, template: template)
     }
     
+    /// 空の状態のjsonデータを生成する
+    ///
+    /// - parameter skeletonTemplate:   生成するjsonのフォーマットを指定したテンプレート
+    /// - throws: `JSON.ExceptionType.typeUnmatch` : テンプレートが不正な場合
+    init(skeletonTemplate: ObjectDefineList) throws {
+        let define: ObjectDefine = (key: JSON.RootKey, type: .object(skeletonTemplate))
+        guard let value = JSONData.Value(skeletonType: define.1) else {
+            throw ExceptionType.typeUnmatch(define: define, value: "empty" as AnyObject)
+        }
+        
+        root = JSONData(key: define.0, data: value, define: define.1)
+    }
+    
     /// jsonデータからDataを生成する
     ///
     /// - throws: `JSON.ExceptionType.includeErrorData` : jsonデータ内にエラーデータがある場合<br>
@@ -115,6 +128,20 @@ class JSON {
         let data = try JSONSerialization.data(withJSONObject: root.toAny(), options: [])
         //print(String(data: jsondata, encoding: .utf8)!)
         return data
+    }
+    
+    /// jsonデータからJSON文字列を生成する
+    ///
+    /// - parameter using:    JSON文字列のエンコード
+    /// - throws: `JSON.ExceptionType.includeErrorData` : jsonデータ内にエラーデータがある場合<br>
+    ///           `JSON.ExceptionType.encodingError` : エンコードに失敗した場合<br>
+    ///           `Error` : 変換に失敗した場合
+    /// - returns: 生成されたString
+    func stringData(using: String.Encoding = .utf8) throws -> String {
+        guard let str = String(data: try data(), encoding: using) else {
+            throw ExceptionType.encodingError
+        }
+        return str
     }
     
     subscript(key: JSONData.Key) -> JSONData {
@@ -538,11 +565,17 @@ class JSONData {
     /// - array(ValueDefine):               [ValueDefine]に対応
     /// - object([(Key, ValueDefine)]):     [(Key, ValueDefine)]に対応
     ///
-    /// # 元データに`null`が含まれている場合の動作
+    /// ** 元データに`null`が含まれている場合の挙動 **
     /// フォーマット指定で
     /// - 何も付加されていない:                   フォーマット不一致でエラーになる
     /// - `OrNull`が付加:                      値として`null`が設定される
     /// - `OrNothing`が付加:                   オブジェクト自体が存在しない扱いとなり生成後のJSONデータには含まれない
+    ///
+    /// ** スケルトン作成時の挙動 **
+    /// フォーマット指定で
+    /// - 何も付加されていない:                   空の状態となるので値の設定が必要
+    /// - `OrNull`が付加:                      値として`null`が設定される
+    /// - `OrNothing`が付加:                   空の状態となるので値の設定が必要
     indirect enum ValueDefine {
         case string, stringOrNull, stringOrNothing
         case int, intOrNull, intOrNothing
@@ -584,8 +617,38 @@ class JSONData {
         case object(ObjectDictionary)
         case null
         
-        case error(ExceptionType)        // 取得時にエラーとなった場合
-        case assignment(Any)             // 値を設定する時のラップ用
+        case error(ExceptionType)       // 取得時にエラーとなった場合
+        case assignment(Any)            // 値を設定する時のラップ用
+        case empty                      // スケルトン用
+        
+        init?(skeletonType: ValueDefine) {
+            switch skeletonType {
+            case _ where skeletonType.canNullable:
+                self = .null
+            case .string, .stringOrNothing,
+                 .int, .intOrNothing,
+                 .float, .floatOrNothing,
+                 .bool, .boolOrNothing:
+                self = .empty
+                
+            case .array(let def), .arrayOrNull(let def), .arrayOrNothing(let def):
+                guard let item = Value(skeletonType: def) else { return nil }
+                self = .array([JSONData(key: "", data: item, define: def)])
+                
+            case .object(let defList), .objectOrNull(let defList), .objectOrNothing(let defList):
+                
+                var list = ObjectDictionary()
+                for def in defList {
+                    let key = def.0, type = def.1
+                    guard let value = Value(skeletonType: type) else { return nil }
+                    list[key] = JSONData(key: key, data: value, define: type)
+                }
+                self = .object(list)
+                
+            case .forWrap: return nil
+            default: return nil
+            }
+        }
         
         init?(type: ValueDefine, value: AnyObject) {
             if type.canNullable && (value is NSNull || (value as? Value)?.isNull ?? false)  {
@@ -664,7 +727,7 @@ class JSONData {
         }
         
         enum ConvertError: Error {
-            case error(ExceptionType), assignment
+            case error(ExceptionType), assignment, empty
         }
         
         func toAny() throws -> Any {
@@ -681,6 +744,7 @@ class JSONData {
             case .null: return NSNull()
             case .error(let error): throw ConvertError.error(error)
             case .assignment: throw ConvertError.assignment
+            case .empty: throw ConvertError.empty
             }
         }
     }
