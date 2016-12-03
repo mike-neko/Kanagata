@@ -13,7 +13,7 @@ extension String {
     /// jsonデータからStringを生成する
     ///
     /// - parameter json: Stringの値が入ったjsonデータ
-    /// - returns: Stringのデータ。jsonデータの型が違う場合は`nil`
+    /// - returns: Stringのデータ。型が違うなどでデータが取り出せない場合は`nil`
     init?(json: JSONData) {
         guard let value = try? json.stringValue() else { return nil }
         self = value
@@ -24,7 +24,7 @@ extension Int {
     /// jsonデータからIntを生成する
     ///
     /// - parameter json: Intの値が入ったjsonデータ
-    /// - returns: Intのデータ。jsonデータの型が違う場合は`nil`
+    /// - returns: Intのデータ。型が違うなどでデータが取り出せない場合は`nil`
     init?(json: JSONData) {
         guard let value = try? json.intValue() else { return nil }
         self = value
@@ -35,7 +35,7 @@ extension Float {
     /// jsonデータからFloatを生成する
     ///
     /// - parameter json: Floatの値が入ったjsonデータ
-    /// - returns: Floatのデータ。jsonデータの型が違う場合は`nil`
+    /// - returns: Floatのデータ。型が違うなどでデータが取り出せない場合は`nil`
     init?(json: JSONData) {
         guard let value = try? json.floatValue() else { return nil }
         self = value
@@ -46,19 +46,35 @@ extension Bool {
     /// jsonデータからBoolを生成する
     ///
     /// - parameter json: Boolの値が入ったjsonデータ
-    /// - returns: Boolのデータ。jsonデータの型が違う場合は`nil`
+    /// - returns: Boolのデータ。型が違うなどでデータが取り出せない場合は`nil`
     init?(json: JSONData) {
         guard let value = try? json.boolValue() else { return nil }
         self = value
     }
 }
 
+/// フォーマットを合成する
+///
+/// 既存がある場合は上書きされる
+func + (left: JSON.Format, right: JSON.Format) -> JSON.Format {
+    var dic: JSON.Format = left
+    right.forEach { dic[$0.key] = $0.value }
+    return dic
+}
+
+/// フォーマットを合成する
+///
+/// 既存がある場合は上書きされる
+func += (left: inout JSON.Format, right: JSON.Format) {
+    right.forEach { left[$0.key] = $0.value }
+}
+
+
 // MARK: -
 
 /// JSONデータの変換や操作を行うクラス
 class JSON {
-    typealias ObjectDefine = JSONData.ObjectDefine
-    typealias ObjectDefineList = JSONData.ObjectDefineList
+    typealias Format = [JSONData.Key: JSONData.ValueType]
     
     // MARK: - Property
     
@@ -71,52 +87,53 @@ class JSON {
     /// Dataからjsonデータを生成する
     ///
     /// - parameter data:     生成元となるData。JSONSerialization.jsonObjectで変換できるデータであること
-    /// - parameter template: 生成するjsonのフォーマットを指定したテンプレート
+    /// - parameter format:   生成するjsonのフォーマット
     ///
     /// - throws: `JSON.ExceptionType.createObjectError` : 変換に失敗した場合<br>
-    ///           `JSON.ExceptionType.typeUnmatch` : テンプレートと一致しなかった場合
-    init(data: Data, template: ObjectDefineList) throws {
+    ///           `JSON.ExceptionType.typeUnmatch` : フォーマットと一致しなかった場合
+    init(data: Data, format: Format) throws {
+        let result: AnyObject
         do {
-            let result = try JSONSerialization.jsonObject(with: data, options: []) as AnyObject
-            
-            let define: ObjectDefine = (key: JSON.RootKey, type: .object(template))
-            guard let value = JSONData.Value(type: define.1, value: result) else {
-                throw ExceptionType.typeUnmatch(define: define, value: result)
-            }
-            
-            root = JSONData(key: define.0, data: value, define: define.1)
+            result = try JSONSerialization.jsonObject(with: data, options: []) as AnyObject
         } catch let error as NSError {
             throw ExceptionType.createObjectError(error: error)
         }
+        
+        let define: JSONData.ObjectDefine = (key: JSON.RootKey, type: .object(format))
+        guard let value = JSONData.Value(type: define.1, value: result) else {
+            throw ExceptionType.typeUnmatch(key: JSON.RootKey, type: .object(format), value: result)
+        }
+        
+        root = JSONData(key: define.0, data: value, type: define.1)
     }
     
     /// JSON文字列からjsonデータを生成する
     ///
     /// - parameter string:   変換したいJSON文字列
     /// - parameter using:    JSON文字列で利用しているエンコード
-    /// - parameter template: 生成するjsonのフォーマットを指定したテンプレート
+    /// - parameter format:   生成するjsonのフォーマット
     /// - throws: `JSON.ExceptionType.encodingError` : エンコードに失敗した場合<br>
     ///           `JSON.ExceptionType.createObjectError` : 変換に失敗した場合<br>
-    ///           `JSON.ExceptionType.typeUnmatch` : テンプレートと一致しなかった場合
-    convenience init(string: String, using: String.Encoding = .utf8, template: ObjectDefineList) throws {
+    ///           `JSON.ExceptionType.typeUnmatch` : フォーマットと一致しなかった場合
+    convenience init(string: String, using: String.Encoding = .utf8, format: Format) throws {
         guard let data = string.data(using: using) else {
             throw ExceptionType.encodingError
         }
         
-        try self.init(data: data, template: template)
+        try self.init(data: data, format: format)
     }
     
     /// 空の状態のjsonデータを生成する
     ///
-    /// - parameter skeletonTemplate:   生成するjsonのフォーマットを指定したテンプレート
-    /// - throws: `JSON.ExceptionType.typeUnmatch` : テンプレートが不正な場合
-    init(skeletonTemplate: ObjectDefineList) throws {
-        let define: ObjectDefine = (key: JSON.RootKey, type: .object(skeletonTemplate))
+    /// - parameter skeletonFormat:   生成するjsonのフォーマット
+    /// - throws: `JSON.ExceptionType.typeUnmatch` : フォーマットが不正な場合
+    init(skeletonFormat: Format) throws {
+        let define: JSONData.ObjectDefine = (key: JSON.RootKey, type: .object(skeletonFormat))
         guard let value = JSONData.Value(skeletonType: define.1) else {
-            throw ExceptionType.typeUnmatch(define: define, value: "empty" as AnyObject)
+            throw ExceptionType.typeUnmatch(key: JSON.RootKey, type: .object(skeletonFormat), value: "empty" as AnyObject)
         }
         
-        root = JSONData(key: define.0, data: value, define: define.1)
+        root = JSONData(key: define.0, data: value, type: define.1)
     }
     
     /// jsonデータからDataを生成する
@@ -164,11 +181,14 @@ class JSON {
     
     /// jsonにobjectを追加する。データ内容が定義と一致しない場合は追加されない
     ///
-    /// - parameter objectDefine: 追加するobjectの定義（キー名, フォーマット）
+    /// - note: 既存データがある場合は上書きされる
+    /// - parameter key:          追加するobjectのキー名
+    /// - parameter type:         追加するobjectの値のタイプ
     /// - parameter data:         追加するデータ
-    func append(objectDefine: ObjectDefine, data: Any) {
-        guard let val = root.appended(define: objectDefine, newData: data as AnyObject) else {
-            return
+    func append(key: JSONData.Key, type: JSONData.ValueType, data: Any) {
+        guard let val = root.appended(define: (key, type),
+                                      newData: data as AnyObject) else {
+                                        return
         }
         
         root.data = val
@@ -184,7 +204,7 @@ class JSON {
     
     /// jsonのobjectを全て削除する
     func removeAll() {
-        root = JSONData(key: JSON.RootKey, data: .object([:]), define: .object([]))
+        root = JSONData(key: JSON.RootKey, data: .object([:]), type: .object([:]))
     }
     
     // MARK: - Default
@@ -222,9 +242,10 @@ class JSON {
         
         /// 指定したフォーマットとデータが一致しない場合
         ///
-        /// - parameter define: フォーマット
+        /// - parameter key: キー
+        /// - parameter type: フォーマット
         /// - parameter value: データ
-        case typeUnmatch(define: ObjectDefine, value: AnyObject)
+        case typeUnmatch(key: JSONData.Key, type: JSONData.ValueType, value: AnyObject)
         /// 指定したキーでオブジェクトがない場合
         ///
         /// - parameter parent: 対象のobject
@@ -251,37 +272,41 @@ class JSON {
 /// JSONのデータクラス
 class JSONData {
     typealias Key = String
-    typealias ObjectDictionary = [Key: JSONData]
-    typealias ObjectDefine = (Key, ValueDefine)
-    typealias ObjectDefineList = [ObjectDefine]
+    fileprivate typealias ObjectDictionary = [Key: JSONData]
+    fileprivate typealias ObjectDefine = (Key, ValueType)
     typealias ExceptionType = JSON.ExceptionType
     
     // MARK: - Property
     /// キー
     let key: Key
     fileprivate var data: Value             // 値
-    private let define: ValueDefine         // フォーマット
+    private let type: ValueType             // フォーマット
     
     /// `null`が入っていれば`true`、入っていなければ`false`。エラーの場合も`false`
     var isNull: Bool { return data.isNull }
     /// データが存在すれば`true`、エラーデータであれば`false`
     var exists: Bool { return data.exists }
-    private var objectDefine: ObjectDefine { return (key, define) }
+    private var objectDefine: ObjectDefine { return (key, type) }
+    
+    /// jsonデータの配列を取得する。`array`であれば`JSONData`の配列を取得し、それ以外は空の配列が取得される
+    var array: [JSONData] {
+        guard case .array(let list) = data else { return [] }
+        return list
+    }
     
     // MARK: - Method
-    fileprivate init(key: Key, data: Value, define: ValueDefine) {
+    fileprivate init(key: Key, data: Value, type: ValueType) {
         self.key = key
         self.data = data
-        self.define = define
+        self.type = type
     }
     
     subscript(key: Key) -> JSONData {
         get {
             if case .object(let objs) = data {
-                return objs[key] ?? JSONData(key: key, data: .error(.notFound(parent: self, accessKey: key)), define: .forWrap)
-            } else {
-                return JSONData(key: key, data: .error(.notObject(data: self, accessKey: key)), define: .forWrap)
+                return objs[key] ?? JSONData(key: key, data: .error(.notFound(parent: self, accessKey: key)), type: .forWrap)
             }
+            return JSONData(key: key, data: .error(.notObject(data: self, accessKey: key)), type: .forWrap)
         }
         
         set {
@@ -297,18 +322,18 @@ class JSONData {
             switch newValue.data {
             case .assignment(let valueObj as AnyObject):
                 let newData: Value
-                if valueObj is NSNull {
+                if valueObj is NSNull && (newValue.type.canNullable || child.type.canNothing) {
                     newData = .null
-                } else if let val = Value(type: child.define, value: valueObj) {
+                } else if let val = Value(type: child.type, value: valueObj) {
                     newData = val
                 } else {
-                    JSON.errorList.append(.typeUnmatch(define: objectDefine, value: newValue))
+                    JSON.errorList.append(.typeUnmatch(key: objectDefine.0, type: objectDefine.1, value: newValue))
                     return
                 }
-                objs[key] = JSONData(key: child.key, data: newData, define: child.define)
+                objs[key] = JSONData(key: child.key, data: newData, type: child.type)
                 data = .object(objs)
             default:
-                JSON.errorList.append(.typeUnmatch(define: objectDefine, value: newValue))
+                JSON.errorList.append(.typeUnmatch(key: objectDefine.0, type: objectDefine.1, value: newValue))
                 return
             }
         }
@@ -318,12 +343,12 @@ class JSONData {
         get {
             if case .array(let arr) = data {
                 guard arr.indices.contains(index) else {
-                    return JSONData(key: key, data: .error(.outOfRange(parent: self, index: index)), define: .forWrap)
+                    return JSONData(key: key, data: .error(.outOfRange(parent: self, index: index)), type: .forWrap)
                 }
                 return arr[index]
-            } else {
-                return JSONData(key: key, data: .error(.notArray(data: self)), define: .forWrap)
             }
+            
+            return JSONData(key: key, data: .error(.notArray(data: self)), type: .forWrap)
         }
         
         set {
@@ -340,18 +365,18 @@ class JSONData {
             switch newValue.data {
             case .assignment(let valueObj as AnyObject):
                 let newData: Value
-                if valueObj is NSNull {
+                if valueObj is NSNull && (newValue.type.canNullable || element.type.canNothing) {
                     newData = .null
-                } else if let val = Value(type: element.define, value: valueObj) {
+                } else if let val = Value(type: element.type, value: valueObj) {
                     newData = val
                 } else {
-                    JSON.errorList.append(.typeUnmatch(define: objectDefine, value: newValue))
+                    JSON.errorList.append(.typeUnmatch(key: objectDefine.0, type: objectDefine.1, value: newValue))
                     return
                 }
-                arr[index] = JSONData(key: element.key, data: newData, define: element.define)
+                arr[index] = JSONData(key: element.key, data: newData, type: element.type)
                 data = .array(arr)
             default:
-                JSON.errorList.append(.typeUnmatch(define: objectDefine, value: newValue))
+                JSON.errorList.append(.typeUnmatch(key: objectDefine.0, type: objectDefine.1, value: newValue))
                 return
             }
         }
@@ -365,7 +390,7 @@ class JSONData {
         switch data {
         case .string(let val): return val
         case .error(let error): throw error
-        default: throw ExceptionType.typeUnmatch(define: objectDefine, value: (try? data.toAny()) as AnyObject)
+        default: throw ExceptionType.typeUnmatch(key: objectDefine.0, type: objectDefine.1, value: (try? data.toAny()) as AnyObject)
         }
     }
     
@@ -377,7 +402,7 @@ class JSONData {
         switch data {
         case .int(let val): return val
         case .error(let error): throw error
-        default: throw ExceptionType.typeUnmatch(define: objectDefine, value: (try? data.toAny()) as AnyObject)
+        default: throw ExceptionType.typeUnmatch(key: objectDefine.0, type: objectDefine.1, value: (try? data.toAny()) as AnyObject)
         }
     }
     
@@ -389,7 +414,7 @@ class JSONData {
         switch data {
         case .float(let val): return val
         case .error(let error): throw error
-        default: throw ExceptionType.typeUnmatch(define: objectDefine, value: (try? data.toAny()) as AnyObject)
+        default: throw ExceptionType.typeUnmatch(key: objectDefine.0, type: objectDefine.1, value: (try? data.toAny()) as AnyObject)
         }
     }
     
@@ -401,7 +426,7 @@ class JSONData {
         switch data {
         case .bool(let val): return val
         case .error(let error): throw error
-        default: throw ExceptionType.typeUnmatch(define: objectDefine, value: (try? data.toAny()) as AnyObject)
+        default: throw ExceptionType.typeUnmatch(key: objectDefine.0, type: objectDefine.1, value: (try? data.toAny()) as AnyObject)
         }
     }
     
@@ -435,27 +460,36 @@ class JSONData {
             return nil
         }
         
-        guard let value = Value(type: define.1, value: newData as AnyObject) else {
-            JSON.errorList.append(.typeUnmatch(define: define, value: newData))
+        var value: Value
+        
+        if let val = Value(type: define.1, value: newData as AnyObject) {
+            value = val
+        } else if newData is NSNull && define.1.canNothing {
+            value = .null
+        } else {
+            JSON.errorList.append(.typeUnmatch(key: define.0, type: define.1, value: newData))
             return nil
         }
         
-        objs[define.0] = JSONData(key: define.0, data: value, define: define.1)
+        objs[define.0] = JSONData(key: define.0, data: value, type: define.1)
         return .object(objs)
         
     }
     
     fileprivate func toAny() throws -> Any {
-        do { return try data.toAny() }
-        catch { throw ExceptionType.includeErrorData(data: self) }
+        guard let data = try? data.toAny() else {
+            throw ExceptionType.includeErrorData(data: self)
+        }
+        return data
     }
     
     /// jsonにobjectを追加する。データ内容が定義と一致しない場合は追加されない
     ///
-    /// - parameter objectDefine: 追加するobjectの定義（キー名, フォーマット）
+    /// - parameter key:          追加するobjectのキー名
+    /// - parameter type:         追加するobjectの値のタイプ
     /// - parameter data:         追加するデータ
-    func append(objectDefine: ObjectDefine, data: Any) {
-        if let val = appended(define: objectDefine, newData: data as AnyObject) {
+    func append(key: JSONData.Key, type: JSONData.ValueType, data: Any) {
+        if let val = appended(define: (key, type), newData: data as AnyObject) {
             self.data = val
         }
     }
@@ -464,19 +498,24 @@ class JSONData {
     ///
     /// - parameter array: 追加する配列データ
     func append(array: [Any]) {
-        guard case .array(var arr) = self.data else {
-            JSON.errorList.append(.notArray(data: self))
-            return
+        var arr = [JSONData]()
+        if case .array(let list) = self.data {
+            arr = list
         }
         
-        switch define {
+        switch type {
         case .array(let def), .arrayOrNull(let def), .arrayOrNothing(let def):
             for ele in array as [AnyObject] {
-                guard let item = Value(type: def, value: ele) else {
-                    JSON.errorList.append(.typeUnmatch(define: objectDefine, value: ele))
+                let val: Value
+                if let item = Value(type: def, value: ele) {
+                    val = item
+                } else if ele is NSNull && def.canNothing {
+                    val = .null
+                } else {
+                    JSON.errorList.append(.typeUnmatch(key: objectDefine.0, type: objectDefine.1, value: ele))
                     return
                 }
-                arr += [JSONData(key: "", data: item, define: def)]
+                arr += [JSONData(key: "", data: val, type: def)]
             }
             self.data = .array(arr)
         default:
@@ -548,13 +587,15 @@ class JSONData {
     /// - parameter value: 値
     /// - returns: JSONデータ
     static func value(_ value: Any) -> JSONData {
-        return JSONData(key: "", data: .assignment(value), define: .forWrap)
+        return JSONData(key: "", data: .assignment(value), type: .forWrap)
     }
     
-    /// `null`のJSONデータを作成する。JSONデータの内容の設定時に利用
-    static let null = JSONData(key: "", data: .assignment(NSNull()), define: .forWrap)
+    /// `null`のJSONデータを作成する。JSONデータの内容の設定時に利用。読み取り専用
+    static var null: JSONData {
+        return JSONData(key: "", data: .assignment(NSNull()), type: .forWrap)
+    }
     
-    // MARK: - ValueDefine
+    // MARK: - ValueType
     
     /// JSONデータのフォーマット
     ///
@@ -562,27 +603,28 @@ class JSONData {
     /// - int:                              Intに対応
     /// - float:                            Floatに対応
     /// - bool:                             Boolに対応
-    /// - array(ValueDefine):               [ValueDefine]に対応
-    /// - object([(Key, ValueDefine)]):     [(Key, ValueDefine)]に対応
+    /// - array(ValueType):                 [ValueType]に対応
+    /// - object([(Key, ValueType)]):       [(Key, ValueType)]に対応
     ///
-    /// ** 元データに`null`が含まれている場合の挙動 **
+    /// **元データに`null`が含まれている場合の挙動**
+    ///
     /// フォーマット指定で
     /// - 何も付加されていない:                   フォーマット不一致でエラーになる
     /// - `OrNull`が付加:                      値として`null`が設定される
     /// - `OrNothing`が付加:                   オブジェクト自体が存在しない扱いとなり生成後のJSONデータには含まれない
     ///
-    /// ** スケルトン作成時の挙動 **
+    /// **スケルトン作成時の挙動**
     /// フォーマット指定で
     /// - 何も付加されていない:                   空の状態となるので値の設定が必要
     /// - `OrNull`が付加:                      値として`null`が設定される
     /// - `OrNothing`が付加:                   空の状態となるので値の設定が必要
-    indirect enum ValueDefine {
+    indirect enum ValueType {
         case string, stringOrNull, stringOrNothing
         case int, intOrNull, intOrNothing
         case float, floatOrNull, floatOrNothing
         case bool, boolOrNull, boolOrNothing
-        case array(ValueDefine), arrayOrNull(ValueDefine), arrayOrNothing(ValueDefine)
-        case object(ObjectDefineList), objectOrNull(ObjectDefineList), objectOrNothing(ObjectDefineList)
+        case array(ValueType), arrayOrNull(ValueType), arrayOrNothing(ValueType)
+        case object([Key: ValueType]), objectOrNull([Key: ValueType]), objectOrNothing([Key: ValueType])
         
         case forWrap  // 子要素やエラーのラップ用
         
@@ -621,19 +663,24 @@ class JSONData {
         case assignment(Any)            // 値を設定する時のラップ用
         case empty                      // スケルトン用
         
-        init?(skeletonType: ValueDefine) {
+        init?(skeletonType: ValueType) {
             switch skeletonType {
-            case _ where skeletonType.canNullable:
+            case .stringOrNull, .stringOrNothing,
+                 .intOrNull, .intOrNothing,
+                 .floatOrNull, .floatOrNothing,
+                 .boolOrNull, .boolOrNothing:
                 self = .null
-            case .string, .stringOrNothing,
-                 .int, .intOrNothing,
-                 .float, .floatOrNothing,
-                 .bool, .boolOrNothing:
+                
+            case .string, .int, .float, .bool:
                 self = .empty
                 
             case .array(let def), .arrayOrNull(let def), .arrayOrNothing(let def):
                 guard let item = Value(skeletonType: def) else { return nil }
-                self = .array([JSONData(key: "", data: item, define: def)])
+                if case .null = item {
+                    self = .array([])
+                } else {
+                    self = .array([JSONData(key: "", data: item, type: def)])
+                }
                 
             case .object(let defList), .objectOrNull(let defList), .objectOrNothing(let defList):
                 
@@ -641,17 +688,16 @@ class JSONData {
                 for def in defList {
                     let key = def.0, type = def.1
                     guard let value = Value(skeletonType: type) else { return nil }
-                    list[key] = JSONData(key: key, data: value, define: type)
+                    list[key] = JSONData(key: key, data: value, type: type)
                 }
                 self = .object(list)
                 
             case .forWrap: return nil
-            default: return nil
             }
         }
         
-        init?(type: ValueDefine, value: AnyObject) {
-            if type.canNullable && (value is NSNull || (value as? Value)?.isNull ?? false)  {
+        init?(type: ValueType, value: AnyObject) {
+            if type.canNullable && value is NSNull {
                 self = .null
                 return
             }
@@ -678,8 +724,11 @@ class JSONData {
                 
                 var arr = [JSONData]()
                 for element in list {
+                    if def.canNothing && element is NSNull {
+                        continue
+                    }
                     guard let item = Value(type: def, value: element) else { return nil }
-                    arr += [JSONData(key: "", data: item, define: def)]
+                    arr += [JSONData(key: "", data: item, type: def)]
                 }
                 self = .array(arr)
                 
@@ -689,19 +738,26 @@ class JSONData {
                 for def in defList {
                     let key = def.0, type = def.1
                     
+                    // XCTest用に崩して書く
                     let data: Value
                     if let d = dic[key] {
+                        if d is NSNull && type.canNothing {
+                            continue
+                        }
                         guard let value = Value(type: type, value: d) else { return nil }
                         data = value
-                    } else if type.canNullable {
-                        data = .null
-                    } else if type.canNothing {
+                        list[key] = JSONData(key: key, data: data, type: type)
                         continue
-                    } else {
-                        return nil
                     }
-                    
-                    list[key] = JSONData(key: key, data: data, define: type)
+                    if type.canNullable {
+                        data = .null
+                        list[key] = JSONData(key: key, data: data, type: type)
+                        continue
+                    }
+                    if type.canNothing {
+                        continue
+                    }
+                    return nil
                 }
                 self = .object(list)
                 
@@ -712,9 +768,8 @@ class JSONData {
         var isNull: Bool {
             if case .null = self {
                 return true
-            } else {
-                return false
             }
+            return false
         }
         
         var exists: Bool {
@@ -727,7 +782,7 @@ class JSONData {
         }
         
         enum ConvertError: Error {
-            case error(ExceptionType), assignment, empty
+            case type, empty
         }
         
         func toAny() throws -> Any {
@@ -736,16 +791,29 @@ class JSONData {
             case .int(let val): return val
             case .float(let val): return val
             case .bool(let val): return val
-            case .array(let list): return try list.map { try $0.toAny() }
+            case .array(let list):
+                return try list.flatMap { obj -> Any? in
+                    let val = try obj.toAny()
+                    if val is NSNull && obj.type.canNothing {
+                        return nil
+                    }
+                    return val
+                }
             case .object(let objs):
                 var dic: [String: Any] = [:]
-                try objs.forEach { dic[$0.key] = try $0.value.toAny() }
+                try objs.forEach {
+                    let val = try $0.value.toAny()
+                    if val is NSNull && $0.value.type.canNothing {
+                        return
+                    }
+                    dic[$0.key] = try $0.value.toAny()
+                }
                 return dic
             case .null: return NSNull()
-            case .error(let error): throw ConvertError.error(error)
-            case .assignment: throw ConvertError.assignment
+            case .error, .assignment: throw ConvertError.type
             case .empty: throw ConvertError.empty
             }
         }
     }
 }
+
