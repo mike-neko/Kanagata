@@ -10,6 +10,7 @@
 		0E466B381DF85BDD00CE6C49 /* Kanagata.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E466B2E1DF85BDC00CE6C49 /* Kanagata.framework */; };
 		0E466B3D1DF85BDD00CE6C49 /* KanagataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E466B3C1DF85BDD00CE6C49 /* KanagataTests.swift */; };
 		0E466B3F1DF85BDD00CE6C49 /* Kanagata.h in Headers */ = {isa = PBXBuildFile; fileRef = 0E466B311DF85BDC00CE6C49 /* Kanagata.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0E466B7C1DF8602E00CE6C49 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E466B7B1DF8602E00CE6C49 /* JSON.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		0E466B371DF85BDD00CE6C49 /* KanagataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KanagataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E466B3C1DF85BDD00CE6C49 /* KanagataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanagataTests.swift; sourceTree = "<group>"; };
 		0E466B3E1DF85BDD00CE6C49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0E466B7B1DF8602E00CE6C49 /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 			children = (
 				0E466B311DF85BDC00CE6C49 /* Kanagata.h */,
 				0E466B321DF85BDC00CE6C49 /* Info.plist */,
+				0E466B7B1DF8602E00CE6C49 /* JSON.swift */,
 			);
 			path = Kanagata;
 			sourceTree = "<group>";
@@ -148,12 +151,12 @@
 				TargetAttributes = {
 					0E466B2D1DF85BDC00CE6C49 = {
 						CreatedOnToolsVersion = 8.1;
+						LastSwiftMigration = 0810;
 						ProvisioningStyle = Manual;
 					};
 					0E466B361DF85BDD00CE6C49 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = ZA482485NV;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -197,6 +200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E466B7C1DF8602E00CE6C49 /* JSON.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +325,7 @@
 		0E466B431DF85BDD00CE6C49 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -333,6 +338,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mikeneko-app.Kanagata";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -340,6 +346,7 @@
 		0E466B441DF85BDD00CE6C49 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
@@ -359,7 +366,8 @@
 		0E466B461DF85BDD00CE6C49 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEVELOPMENT_TEAM = ZA482485NV;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = KanagataTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mikeneko-app.KanagataTests";
@@ -371,7 +379,8 @@
 		0E466B471DF85BDD00CE6C49 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEVELOPMENT_TEAM = ZA482485NV;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = KanagataTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mikeneko-app.KanagataTests";
