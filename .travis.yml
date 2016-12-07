@@ -2,6 +2,6 @@ language: objective-c
 osx_image: xcode8.1
 script:
   - set -o pipefail
-  - xcodebuild test -workspace Kanagata.xcworkspace -scheme Kanagata -sdk iphonesimulator | xcpretty -c
+  - xcodebuild test -scheme Kanagata -sdk iphonesimulator | xcpretty -c
 notifications:
   email: false
