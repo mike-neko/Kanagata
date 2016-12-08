@@ -1,10 +1,14 @@
 language: objective-c
 osx_image: xcode8.1
+before_install:
+  - brew update
+  - brew install swiftlint
 script:
   - set -o pipefail
+  - swiftlint
   - xcodebuild test -scheme Kanagata -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 5,OS=9.0'
   - xcodebuild test -scheme Kanagata -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 5,OS=10.0'
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 notifications:
-  email: true
+  email: false

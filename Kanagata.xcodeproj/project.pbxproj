@@ -107,6 +107,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0E466B421DF85BDD00CE6C49 /* Build configuration list for PBXNativeTarget "Kanagata" */;
 			buildPhases = (
+				0E466B7D1DF9931000CE6C49 /* ShellScript */,
 				0E466B291DF85BDC00CE6C49 /* Sources */,
 				0E466B2A1DF85BDC00CE6C49 /* Frameworks */,
 				0E466B2B1DF85BDC00CE6C49 /* Headers */,
@@ -194,6 +195,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0E466B7D1DF9931000CE6C49 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint autocorrect\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0E466B291DF85BDC00CE6C49 /* Sources */ = {

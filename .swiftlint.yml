@@ -1,0 +1,17 @@
+included:
+  - Kanagata
+variable_name:
+  min_length: 0
+line_length:
+  - 120
+  - 150
+type_body_length:
+  - 350
+  - 400
+function_body_length:
+  - 50
+  - 100
+cyclomatic_complexity: 25
+disabled_rules:
+  - nesting
+  - file_length
