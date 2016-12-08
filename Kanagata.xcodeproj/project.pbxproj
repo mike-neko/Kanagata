@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0E466B381DF85BDD00CE6C49 /* Kanagata.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E466B2E1DF85BDC00CE6C49 /* Kanagata.framework */; };
 		0E466B3D1DF85BDD00CE6C49 /* KanagataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E466B3C1DF85BDD00CE6C49 /* KanagataTests.swift */; };
-		0E466B3F1DF85BDD00CE6C49 /* Kanagata.h in Headers */ = {isa = PBXBuildFile; fileRef = 0E466B311DF85BDC00CE6C49 /* Kanagata.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0E466B7C1DF8602E00CE6C49 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E466B7B1DF8602E00CE6C49 /* JSON.swift */; };
 /* End PBXBuildFile section */
 
@@ -25,7 +24,6 @@
 
 /* Begin PBXFileReference section */
 		0E466B2E1DF85BDC00CE6C49 /* Kanagata.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Kanagata.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0E466B311DF85BDC00CE6C49 /* Kanagata.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Kanagata.h; sourceTree = "<group>"; };
 		0E466B321DF85BDC00CE6C49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E466B371DF85BDD00CE6C49 /* KanagataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KanagataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E466B3C1DF85BDD00CE6C49 /* KanagataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanagataTests.swift; sourceTree = "<group>"; };
@@ -73,7 +71,6 @@
 		0E466B301DF85BDC00CE6C49 /* Kanagata */ = {
 			isa = PBXGroup;
 			children = (
-				0E466B311DF85BDC00CE6C49 /* Kanagata.h */,
 				0E466B321DF85BDC00CE6C49 /* Info.plist */,
 				0E466B7B1DF8602E00CE6C49 /* JSON.swift */,
 			);
@@ -96,7 +93,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E466B3F1DF85BDD00CE6C49 /* Kanagata.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

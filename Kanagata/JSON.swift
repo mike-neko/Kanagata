@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - extension
-extension String {
+public extension String {
     /// jsonデータからStringを生成する
     ///
     /// - parameter json: Stringの値が入ったjsonデータ
@@ -20,7 +20,7 @@ extension String {
     }
 }
 
-extension Int {
+public extension Int {
     /// jsonデータからIntを生成する
     ///
     /// - parameter json: Intの値が入ったjsonデータ
@@ -31,7 +31,7 @@ extension Int {
     }
 }
 
-extension Double {
+public extension Double {
     /// jsonデータからDoubleを生成する
     ///
     /// - parameter json: Doubleの値が入ったjsonデータ
@@ -42,7 +42,7 @@ extension Double {
     }
 }
 
-extension Bool {
+public extension Bool {
     /// jsonデータからBoolを生成する
     ///
     /// - parameter json: Boolの値が入ったjsonデータ
@@ -56,7 +56,7 @@ extension Bool {
 /// フォーマットを合成する
 ///
 /// 既存がある場合は上書きされる
-func + (left: JSON.Format, right: JSON.Format) -> JSON.Format {
+public func + (left: JSON.Format, right: JSON.Format) -> JSON.Format {
     var dic: JSON.Format = left
     right.forEach { dic[$0.key] = $0.value }
     return dic
@@ -65,15 +65,15 @@ func + (left: JSON.Format, right: JSON.Format) -> JSON.Format {
 /// フォーマットを合成する
 ///
 /// 既存がある場合は上書きされる
-func += (left: inout JSON.Format, right: JSON.Format) {
+public func += (left: inout JSON.Format, right: JSON.Format) {
     right.forEach { left[$0.key] = $0.value }
 }
 
 // MARK: -
 
 /// JSONデータの変換や操作を行うクラス
-open class JSON {
-    typealias Format = [JSONData.Key: JSONData.ValueType]
+public class JSON {
+    public typealias Format = [JSONData.Key: JSONData.ValueType]
 
     // MARK: - Property
 
@@ -90,7 +90,7 @@ open class JSON {
     ///
     /// - throws: `JSON.ExceptionType.createObjectError` : 変換に失敗した場合<br>
     ///           `JSON.ExceptionType.typeUnmatch` : フォーマットと一致しなかった場合
-    init(data: Data, format: Format) throws {
+    public init(data: Data, format: Format) throws {
         let result: AnyObject
         do {
             result = try JSONSerialization.jsonObject(with: data, options: []) as AnyObject
@@ -114,7 +114,7 @@ open class JSON {
     /// - throws: `JSON.ExceptionType.encodingError` : エンコードに失敗した場合<br>
     ///           `JSON.ExceptionType.createObjectError` : 変換に失敗した場合<br>
     ///           `JSON.ExceptionType.typeUnmatch` : フォーマットと一致しなかった場合
-    convenience init(string: String, using: String.Encoding = .utf8, format: Format) throws {
+    public convenience init(string: String, using: String.Encoding = .utf8, format: Format) throws {
         guard let data = string.data(using: using) else {
             throw ExceptionType.encodingError
         }
@@ -126,7 +126,7 @@ open class JSON {
     ///
     /// - parameter skeletonFormat:   生成するjsonのフォーマット
     /// - throws: `JSON.ExceptionType.typeUnmatch` : フォーマットが不正な場合
-    init(skeletonFormat: Format) throws {
+    public init(skeletonFormat: Format) throws {
         let define: JSONData.ObjectDefine = (key: JSON.RootKey, type: .object(skeletonFormat))
         guard let value = JSONData.Value(skeletonType: define.1) else {
             throw ExceptionType.typeUnmatch(key: JSON.RootKey,
@@ -141,7 +141,7 @@ open class JSON {
     /// - throws: `JSON.ExceptionType.includeErrorData` : jsonデータ内にエラーデータがある場合<br>
     ///           `Error` : 変換に失敗した場合
     /// - returns: 生成されたData
-    func data() throws -> Data {
+    public func data() throws -> Data {
         let data = try JSONSerialization.data(withJSONObject: root.toAny(), options: [])
         //print(String(data: jsondata, encoding: .utf8)!)
         return data
@@ -154,14 +154,14 @@ open class JSON {
     ///           `JSON.ExceptionType.encodingError` : エンコードに失敗した場合<br>
     ///           `Error` : 変換に失敗した場合
     /// - returns: 生成されたString
-    func stringData(using: String.Encoding = .utf8) throws -> String {
+    public func stringData(using: String.Encoding = .utf8) throws -> String {
         guard let str = String(data: try data(), encoding: using) else {
             throw ExceptionType.encodingError
         }
         return str
     }
 
-    subscript(key: JSONData.Key) -> JSONData {
+    public subscript(key: JSONData.Key) -> JSONData {
         get { return root[key] }
         set { root[key] = newValue }
     }
@@ -170,7 +170,7 @@ open class JSON {
     ///
     /// - parameter block: エラーを補足したい一連の処理を記述したクロージャ
     /// - throws: 発生したエラー内容。詳細は`JSON.ExceptionType`を参照
-    func update(_ block: (() -> Void)) throws {
+    public func update(_ block: (() -> Void)) throws {
         JSON.errorList.removeAll()
         block()
         if let error = JSON.errorList.first {
@@ -185,7 +185,7 @@ open class JSON {
     /// - parameter key:          追加するobjectのキー名
     /// - parameter type:         追加するobjectの値のタイプ
     /// - parameter data:         追加するデータ
-    func append(key: JSONData.Key, type: JSONData.ValueType, data: Any) {
+    public func append(key: JSONData.Key, type: JSONData.ValueType, data: Any) {
         guard let val = root.appended(define: (key, type),
                                       newData: data as AnyObject) else {
                                         return
@@ -197,19 +197,19 @@ open class JSON {
     /// jsonから指定したキーのobjectを削除する。指定したキーが存在しない場合は何もされない
     ///
     /// - parameter forKey: 削除したいobjectのキー
-    func removeValue(forKey: JSONData.Key) {
+    public func removeValue(forKey: JSONData.Key) {
         guard let newData = root.removed(value: root.data, forKey: forKey) else { return }
         root.data = newData
     }
 
     /// jsonのobjectを全て削除する
-    func removeAll() {
+    public func removeAll() {
         root = JSONData(key: JSON.RootKey, data: .object([:]), type: .object([:]))
     }
 
     // MARK: - Default
     /// 各データ型ごとの値の取得時のデフォルト値
-    struct Default {
+    public struct Default {
         /// Stringの値の取得時のデフォルト値
         static var stringValue = ""
         /// Intの値の取得時のデフォルト値
@@ -222,7 +222,7 @@ open class JSON {
 
     // MARK: - Error
     /// JSONクラスで発生して通知されるエラー
-    enum ExceptionType: Error {
+    public enum ExceptionType: Error {
         /// StringをDataへ変換できなかった場合
         case encodingError
         /// DataからJSONObjectを生成できなかった場合
@@ -270,26 +270,26 @@ open class JSON {
 }
 
 /// JSONのデータクラス
-class JSONData {
-    typealias Key = String
+public class JSONData {
+    public typealias Key = String
     fileprivate typealias ObjectDictionary = [Key: JSONData]
     fileprivate typealias ObjectDefine = (Key, ValueType)
-    typealias ExceptionType = JSON.ExceptionType
+    public typealias ExceptionType = JSON.ExceptionType
 
     // MARK: - Property
     /// キー
-    let key: Key
+    public let key: Key
     fileprivate var data: Value             // 値
     private let type: ValueType             // フォーマット
 
     /// `null`が入っていれば`true`、入っていなければ`false`。エラーの場合も`false`
-    var isNull: Bool { return data.isNull }
+    public var isNull: Bool { return data.isNull }
     /// データが存在すれば`true`、エラーデータであれば`false`
-    var exists: Bool { return data.exists }
+    public var exists: Bool { return data.exists }
     private var objectDefine: ObjectDefine { return (key, type) }
 
     /// jsonデータの配列を取得する。`array`であれば`JSONData`の配列を取得し、それ以外は空の配列が取得される
-    var array: [JSONData] {
+    public var array: [JSONData] {
         guard case .array(let list) = data else { return [] }
         return list
     }
@@ -301,7 +301,7 @@ class JSONData {
         self.type = type
     }
 
-    subscript(key: Key) -> JSONData {
+    public subscript(key: Key) -> JSONData {
         get {
             if case .object(let objs) = data {
                 return objs[key] ?? JSONData(key: key,
@@ -340,7 +340,7 @@ class JSONData {
         }
     }
 
-    subscript(index: Int) -> JSONData {
+    public subscript(index: Int) -> JSONData {
         get {
             if case .array(let arr) = data {
                 guard arr.indices.contains(index) else {
@@ -387,7 +387,7 @@ class JSONData {
     ///
     /// - throws: `JSON.ExceptionType.typeUnmatch` : 型が一致しなかった場合
     /// - returns: Stringの取得データ
-    func stringValue() throws -> String {
+    public func stringValue() throws -> String {
         switch data {
         case .string(let val): return val
         case .error(let error): throw error
@@ -400,7 +400,7 @@ class JSONData {
     ///
     /// - throws: `JSON.ExceptionType.typeUnmatch` : 型が一致しなかった場合
     /// - returns: Intの取得データ
-    func intValue() throws -> Int {
+    public func intValue() throws -> Int {
         switch data {
         case .int(let val): return val
         case .error(let error): throw error
@@ -413,7 +413,7 @@ class JSONData {
     ///
     /// - throws: `JSON.ExceptionType.typeUnmatch` : 型が一致しなかった場合
     /// - returns: Doubleの取得データ
-    func doubleValue() throws -> Double {
+    public func doubleValue() throws -> Double {
         switch data {
         case .double(let val): return val
         case .error(let error): throw error
@@ -426,7 +426,7 @@ class JSONData {
     ///
     /// - throws: `JSON.ExceptionType.typeUnmatch` : 型が一致しなかった場合
     /// - returns: Boolの取得データ
-    func boolValue() throws -> Bool {
+    public func boolValue() throws -> Bool {
         switch data {
         case .bool(let val): return val
         case .error(let error): throw error
@@ -439,25 +439,25 @@ class JSONData {
     ///
     /// - parameter default: 取得失敗時に返すデフォルト値
     /// - returns: Stringの取得データ。存在しない場合はデフォルト値
-    func value(default: String = JSON.Default.stringValue) -> String { return String(json: self) ?? `default` }
+    public func value(default: String = JSON.Default.stringValue) -> String { return String(json: self) ?? `default` }
 
     /// jsonデータからIntを取得する。型が違うなどで取得に失敗した場合は指定されたデフォルト値を返す
     ///
     /// - parameter default: 取得失敗時に返すデフォルト値
     /// - returns: Intの取得データ。存在しない場合はデフォルト値
-    func value(default: Int = JSON.Default.intValue) -> Int { return Int(json: self) ?? `default` }
+    public func value(default: Int = JSON.Default.intValue) -> Int { return Int(json: self) ?? `default` }
 
     /// jsonデータからDoubleを取得する。型が違うなどで取得に失敗した場合は指定されたデフォルト値を返す
     ///
     /// - parameter default: 取得失敗時に返すデフォルト値
     /// - returns: Doubleの取得データ。存在しない場合はデフォルト値
-    func value(default: Double = JSON.Default.doubleValue) -> Double { return Double(json: self) ?? `default` }
+    public func value(default: Double = JSON.Default.doubleValue) -> Double { return Double(json: self) ?? `default` }
 
     /// jsonデータからBoolを取得する。型が違うなどで取得に失敗した場合は指定されたデフォルト値を返す
     ///
     /// - parameter default: 取得失敗時に返すデフォルト値
     /// - returns: Boolの取得データ。存在しない場合はデフォルト値
-    func value(default: Bool = JSON.Default.boolValue) -> Bool { return Bool(json: self) ?? `default` }
+    public func value(default: Bool = JSON.Default.boolValue) -> Bool { return Bool(json: self) ?? `default` }
 
     fileprivate func appended(define: ObjectDefine, newData: AnyObject) -> Value? {
         guard case .object(var objs) = data else {
@@ -493,7 +493,7 @@ class JSONData {
     /// - parameter key:          追加するobjectのキー名
     /// - parameter type:         追加するobjectの値のタイプ
     /// - parameter data:         追加するデータ
-    func append(key: JSONData.Key, type: JSONData.ValueType, data: Any) {
+    public func append(key: JSONData.Key, type: JSONData.ValueType, data: Any) {
         if let val = appended(define: (key, type), newData: data as AnyObject) {
             self.data = val
         }
@@ -502,7 +502,7 @@ class JSONData {
     /// jsonにarrayを追加する。データ内容が定義と一致しない場合は追加されない
     ///
     /// - parameter array: 追加する配列データ
-    func append(array: [Any]) {
+    public func append(array: [Any]) {
         var arr = [JSONData]()
         if case .array(let list) = self.data {
             arr = list
@@ -546,7 +546,7 @@ class JSONData {
     /// jsonから指定したキーのobjectを削除する。指定したキーが存在しない場合は何もされない
     ///
     /// - parameter forKey: 削除したいobjectのキー
-    func removeValue(forKey: Key) {
+    public func removeValue(forKey: Key) {
         guard let newData = removed(value: data, forKey: forKey) else { return }
         data = newData
     }
@@ -555,7 +555,7 @@ class JSONData {
     ///
     /// - parameter at: arrayから削除したいデータのインデックス
     @discardableResult
-    func remove(at: Int) -> JSONData? {
+    public func remove(at: Int) -> JSONData? {
         guard case .array(var arr) = data else {
             JSON.errorList.append(.notArray(data: self))
             return nil
@@ -572,7 +572,7 @@ class JSONData {
     }
 
     /// jsonのobjectを全て削除する
-    func removeAll() {
+    public func removeAll() {
         switch data {
         case .object(var objs):
             objs.removeAll()
@@ -591,12 +591,12 @@ class JSONData {
     ///
     /// - parameter value: 値
     /// - returns: JSONデータ
-    static func value(_ value: Any) -> JSONData {
+    public static func value(_ value: Any) -> JSONData {
         return JSONData(key: "", data: .assignment(value), type: .forWrap)
     }
 
     /// `null`のJSONデータを作成する。JSONデータの内容の設定時に利用。読み取り専用
-    static var null: JSONData {
+    public static var null: JSONData {
         return JSONData(key: "", data: .assignment(NSNull()), type: .forWrap)
     }
 
@@ -623,7 +623,7 @@ class JSONData {
     /// - 何も付加されていない:                   空の状態となるので値の設定が必要
     /// - `OrNull`が付加:                      値として`null`が設定される
     /// - `OrNothing`が付加:                   空の状態となるので値の設定が必要
-    indirect enum ValueType {
+    public indirect enum ValueType {
         case string, stringOrNull, stringOrNothing
         case int, intOrNull, intOrNothing
         case double, doubleOrNull, doubleOrNothing
