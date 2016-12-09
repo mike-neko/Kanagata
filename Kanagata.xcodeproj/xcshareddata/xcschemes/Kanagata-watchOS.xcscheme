@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0E466B2D1DF85BDC00CE6C49"
-               BuildableName = "Kanagata.framework"
-               BlueprintName = "Kanagata"
+               BlueprintIdentifier = "0E8856CD1DFB184E001FD2CB"
+               BuildableName = "Kanagata-watchOS.framework"
+               BlueprintName = "Kanagata-watchOS"
                ReferencedContainer = "container:Kanagata.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,29 +26,9 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      codeCoverageEnabled = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0E466B361DF85BDD00CE6C49"
-               BuildableName = "KanagataTests.xctest"
-               BlueprintName = "KanagataTests"
-               ReferencedContainer = "container:Kanagata.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0E466B2D1DF85BDC00CE6C49"
-            BuildableName = "Kanagata.framework"
-            BlueprintName = "Kanagata"
-            ReferencedContainer = "container:Kanagata.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -65,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0E466B2D1DF85BDC00CE6C49"
-            BuildableName = "Kanagata.framework"
-            BlueprintName = "Kanagata"
+            BlueprintIdentifier = "0E8856CD1DFB184E001FD2CB"
+            BuildableName = "Kanagata-watchOS.framework"
+            BlueprintName = "Kanagata-watchOS"
             ReferencedContainer = "container:Kanagata.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -83,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0E466B2D1DF85BDC00CE6C49"
-            BuildableName = "Kanagata.framework"
-            BlueprintName = "Kanagata"
+            BlueprintIdentifier = "0E8856CD1DFB184E001FD2CB"
+            BuildableName = "Kanagata-watchOS.framework"
+            BlueprintName = "Kanagata-watchOS"
             ReferencedContainer = "container:Kanagata.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

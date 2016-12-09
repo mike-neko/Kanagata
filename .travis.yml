@@ -6,8 +6,10 @@ before_install:
 script:
   - set -o pipefail
   - swiftlint
-  - xcodebuild test -scheme Kanagata -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 5,OS=9.0'
-  - xcodebuild test -scheme Kanagata -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 5,OS=10.0'
+  - xcodebuild test -scheme Kanagata-iOS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 5,OS=9.0' | xcpretty -c
+  - xcodebuild test -scheme Kanagata-iOS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 5,OS=10.0' | xcpretty -c
+  - xcodebuild test -scheme Kanagata-macOS -destination 'platform=OS X' | xcpretty -c
+  - xcodebuild test -scheme Kanagata-tvOS -destination 'platform=tvOS Simulator,name=Apple TV 1080p' | xcpretty -c
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 notifications:

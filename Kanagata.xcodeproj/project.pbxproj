@@ -10,6 +10,11 @@
 		0E466B381DF85BDD00CE6C49 /* Kanagata.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E466B2E1DF85BDC00CE6C49 /* Kanagata.framework */; };
 		0E466B3D1DF85BDD00CE6C49 /* KanagataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E466B3C1DF85BDD00CE6C49 /* KanagataTests.swift */; };
 		0E466B7C1DF8602E00CE6C49 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E466B7B1DF8602E00CE6C49 /* JSON.swift */; };
+		0E88569D1DFB1674001FD2CB /* Kanagata.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E8856941DFB1674001FD2CB /* Kanagata.framework */; };
+		0E8856AB1DFB16C5001FD2CB /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E466B7B1DF8602E00CE6C49 /* JSON.swift */; };
+		0E8856BA1DFB17B6001FD2CB /* Kanagata.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E8856B11DFB17B6001FD2CB /* Kanagata.framework */; };
+		0E8856C81DFB1806001FD2CB /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E466B7B1DF8602E00CE6C49 /* JSON.swift */; };
+		0E8856D61DFB188E001FD2CB /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E466B7B1DF8602E00CE6C49 /* JSON.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -20,15 +25,34 @@
 			remoteGlobalIDString = 0E466B2D1DF85BDC00CE6C49;
 			remoteInfo = Kanagata;
 		};
+		0E88569E1DFB1674001FD2CB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0E466B251DF85BDC00CE6C49 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0E8856931DFB1674001FD2CB;
+			remoteInfo = "Kanagata-macOS";
+		};
+		0E8856BB1DFB17B6001FD2CB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0E466B251DF85BDC00CE6C49 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0E8856B01DFB17B6001FD2CB;
+			remoteInfo = "Kanagata-tvOS";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0E466B2E1DF85BDC00CE6C49 /* Kanagata.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Kanagata.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E466B321DF85BDC00CE6C49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0E466B371DF85BDD00CE6C49 /* KanagataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KanagataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E466B371DF85BDD00CE6C49 /* KanagataTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "KanagataTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E466B3C1DF85BDD00CE6C49 /* KanagataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanagataTests.swift; sourceTree = "<group>"; };
 		0E466B3E1DF85BDD00CE6C49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E466B7B1DF8602E00CE6C49 /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
+		0E8856941DFB1674001FD2CB /* Kanagata.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Kanagata.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E88569C1DFB1674001FD2CB /* Kanagata.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Kanagata.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E8856B11DFB17B6001FD2CB /* Kanagata.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Kanagata.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E8856B91DFB17B6001FD2CB /* Kanagata.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Kanagata.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E8856CE1DFB184E001FD2CB /* Kanagata.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Kanagata.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +68,43 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E466B381DF85BDD00CE6C49 /* Kanagata.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E8856901DFB1674001FD2CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E8856991DFB1674001FD2CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E88569D1DFB1674001FD2CB /* Kanagata.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E8856AD1DFB17B6001FD2CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E8856B61DFB17B6001FD2CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E8856BA1DFB17B6001FD2CB /* Kanagata.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E8856CA1DFB184E001FD2CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,7 +124,12 @@
 			isa = PBXGroup;
 			children = (
 				0E466B2E1DF85BDC00CE6C49 /* Kanagata.framework */,
-				0E466B371DF85BDD00CE6C49 /* KanagataTests.xctest */,
+				0E466B371DF85BDD00CE6C49 /* KanagataTests-iOS.xctest */,
+				0E8856941DFB1674001FD2CB /* Kanagata.framework */,
+				0E88569C1DFB1674001FD2CB /* Kanagata.xctest */,
+				0E8856B11DFB17B6001FD2CB /* Kanagata.framework */,
+				0E8856B91DFB17B6001FD2CB /* Kanagata.xctest */,
+				0E8856CE1DFB184E001FD2CB /* Kanagata.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -96,12 +162,33 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0E8856911DFB1674001FD2CB /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E8856AE1DFB17B6001FD2CB /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E8856CB1DFB184E001FD2CB /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		0E466B2D1DF85BDC00CE6C49 /* Kanagata */ = {
+		0E466B2D1DF85BDC00CE6C49 /* Kanagata-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0E466B421DF85BDD00CE6C49 /* Build configuration list for PBXNativeTarget "Kanagata" */;
+			buildConfigurationList = 0E466B421DF85BDD00CE6C49 /* Build configuration list for PBXNativeTarget "Kanagata-iOS" */;
 			buildPhases = (
 				0E466B7D1DF9931000CE6C49 /* ShellScript */,
 				0E466B291DF85BDC00CE6C49 /* Sources */,
@@ -113,14 +200,14 @@
 			);
 			dependencies = (
 			);
-			name = Kanagata;
+			name = "Kanagata-iOS";
 			productName = Kanagata;
 			productReference = 0E466B2E1DF85BDC00CE6C49 /* Kanagata.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		0E466B361DF85BDD00CE6C49 /* KanagataTests */ = {
+		0E466B361DF85BDD00CE6C49 /* KanagataTests-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0E466B451DF85BDD00CE6C49 /* Build configuration list for PBXNativeTarget "KanagataTests" */;
+			buildConfigurationList = 0E466B451DF85BDD00CE6C49 /* Build configuration list for PBXNativeTarget "KanagataTests-iOS" */;
 			buildPhases = (
 				0E466B331DF85BDD00CE6C49 /* Sources */,
 				0E466B341DF85BDD00CE6C49 /* Frameworks */,
@@ -131,10 +218,100 @@
 			dependencies = (
 				0E466B3A1DF85BDD00CE6C49 /* PBXTargetDependency */,
 			);
-			name = KanagataTests;
+			name = "KanagataTests-iOS";
 			productName = KanagataTests;
-			productReference = 0E466B371DF85BDD00CE6C49 /* KanagataTests.xctest */;
+			productReference = 0E466B371DF85BDD00CE6C49 /* KanagataTests-iOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		0E8856931DFB1674001FD2CB /* Kanagata-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0E8856A51DFB1674001FD2CB /* Build configuration list for PBXNativeTarget "Kanagata-macOS" */;
+			buildPhases = (
+				0E88568F1DFB1674001FD2CB /* Sources */,
+				0E8856901DFB1674001FD2CB /* Frameworks */,
+				0E8856911DFB1674001FD2CB /* Headers */,
+				0E8856921DFB1674001FD2CB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Kanagata-macOS";
+			productName = "Kanagata-macOS";
+			productReference = 0E8856941DFB1674001FD2CB /* Kanagata.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		0E88569B1DFB1674001FD2CB /* Kanagata-macOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0E8856A81DFB1674001FD2CB /* Build configuration list for PBXNativeTarget "Kanagata-macOSTests" */;
+			buildPhases = (
+				0E8856981DFB1674001FD2CB /* Sources */,
+				0E8856991DFB1674001FD2CB /* Frameworks */,
+				0E88569A1DFB1674001FD2CB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0E88569F1DFB1674001FD2CB /* PBXTargetDependency */,
+			);
+			name = "Kanagata-macOSTests";
+			productName = "Kanagata-macOSTests";
+			productReference = 0E88569C1DFB1674001FD2CB /* Kanagata.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		0E8856B01DFB17B6001FD2CB /* Kanagata-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0E8856C21DFB17B6001FD2CB /* Build configuration list for PBXNativeTarget "Kanagata-tvOS" */;
+			buildPhases = (
+				0E8856AC1DFB17B6001FD2CB /* Sources */,
+				0E8856AD1DFB17B6001FD2CB /* Frameworks */,
+				0E8856AE1DFB17B6001FD2CB /* Headers */,
+				0E8856AF1DFB17B6001FD2CB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Kanagata-tvOS";
+			productName = "Kanagata-tvOS";
+			productReference = 0E8856B11DFB17B6001FD2CB /* Kanagata.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		0E8856B81DFB17B6001FD2CB /* Kanagata-tvOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0E8856C51DFB17B6001FD2CB /* Build configuration list for PBXNativeTarget "Kanagata-tvOSTests" */;
+			buildPhases = (
+				0E8856B51DFB17B6001FD2CB /* Sources */,
+				0E8856B61DFB17B6001FD2CB /* Frameworks */,
+				0E8856B71DFB17B6001FD2CB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0E8856BC1DFB17B6001FD2CB /* PBXTargetDependency */,
+			);
+			name = "Kanagata-tvOSTests";
+			productName = "Kanagata-tvOSTests";
+			productReference = 0E8856B91DFB17B6001FD2CB /* Kanagata.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		0E8856CD1DFB184E001FD2CB /* Kanagata-watchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0E8856D31DFB184E001FD2CB /* Build configuration list for PBXNativeTarget "Kanagata-watchOS" */;
+			buildPhases = (
+				0E8856C91DFB184E001FD2CB /* Sources */,
+				0E8856CA1DFB184E001FD2CB /* Frameworks */,
+				0E8856CB1DFB184E001FD2CB /* Headers */,
+				0E8856CC1DFB184E001FD2CB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Kanagata-watchOS";
+			productName = "Kanagata-watchOS";
+			productReference = 0E8856CE1DFB184E001FD2CB /* Kanagata.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -155,6 +332,28 @@
 						CreatedOnToolsVersion = 8.1;
 						ProvisioningStyle = Manual;
 					};
+					0E8856931DFB1674001FD2CB = {
+						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Manual;
+					};
+					0E88569B1DFB1674001FD2CB = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = ZA482485NV;
+						ProvisioningStyle = Automatic;
+					};
+					0E8856B01DFB17B6001FD2CB = {
+						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Manual;
+					};
+					0E8856B81DFB17B6001FD2CB = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = ZA482485NV;
+						ProvisioningStyle = Automatic;
+					};
+					0E8856CD1DFB184E001FD2CB = {
+						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Manual;
+					};
 				};
 			};
 			buildConfigurationList = 0E466B281DF85BDC00CE6C49 /* Build configuration list for PBXProject "Kanagata" */;
@@ -169,8 +368,13 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0E466B2D1DF85BDC00CE6C49 /* Kanagata */,
-				0E466B361DF85BDD00CE6C49 /* KanagataTests */,
+				0E466B2D1DF85BDC00CE6C49 /* Kanagata-iOS */,
+				0E466B361DF85BDD00CE6C49 /* KanagataTests-iOS */,
+				0E8856931DFB1674001FD2CB /* Kanagata-macOS */,
+				0E88569B1DFB1674001FD2CB /* Kanagata-macOSTests */,
+				0E8856B01DFB17B6001FD2CB /* Kanagata-tvOS */,
+				0E8856B81DFB17B6001FD2CB /* Kanagata-tvOSTests */,
+				0E8856CD1DFB184E001FD2CB /* Kanagata-watchOS */,
 			);
 		};
 /* End PBXProject section */
@@ -184,6 +388,41 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		0E466B351DF85BDD00CE6C49 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E8856921DFB1674001FD2CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E88569A1DFB1674001FD2CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E8856AF1DFB17B6001FD2CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E8856B71DFB17B6001FD2CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E8856CC1DFB184E001FD2CB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -225,13 +464,61 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0E88568F1DFB1674001FD2CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E8856AB1DFB16C5001FD2CB /* JSON.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E8856981DFB1674001FD2CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E8856AC1DFB17B6001FD2CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E8856C81DFB1806001FD2CB /* JSON.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E8856B51DFB17B6001FD2CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E8856C91DFB184E001FD2CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0E8856D61DFB188E001FD2CB /* JSON.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		0E466B3A1DF85BDD00CE6C49 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0E466B2D1DF85BDC00CE6C49 /* Kanagata */;
+			target = 0E466B2D1DF85BDC00CE6C49 /* Kanagata-iOS */;
 			targetProxy = 0E466B391DF85BDD00CE6C49 /* PBXContainerItemProxy */;
+		};
+		0E88569F1DFB1674001FD2CB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0E8856931DFB1674001FD2CB /* Kanagata-macOS */;
+			targetProxy = 0E88569E1DFB1674001FD2CB /* PBXContainerItemProxy */;
+		};
+		0E8856BC1DFB17B6001FD2CB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0E8856B01DFB17B6001FD2CB /* Kanagata-tvOS */;
+			targetProxy = 0E8856BB1DFB17B6001FD2CB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -349,7 +636,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mikeneko-app.Kanagata";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -370,7 +657,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mikeneko-app.Kanagata";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 			};
@@ -402,6 +689,206 @@
 			};
 			name = Release;
 		};
+		0E8856A61DFB1674001FD2CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "$(SRCROOT)/Kanagata/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mikeneko-app.Kanagata";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		0E8856A71DFB1674001FD2CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "$(SRCROOT)/Kanagata/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mikeneko-app.Kanagata";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		0E8856A91DFB1674001FD2CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = ZA482485NV;
+				INFOPLIST_FILE = KanagataTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mikeneko-app.Kanagata";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		0E8856AA1DFB1674001FD2CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = ZA482485NV;
+				INFOPLIST_FILE = KanagataTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mikeneko-app.Kanagata";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		0E8856C31DFB17B6001FD2CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Kanagata/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mikeneko-app.Kanagata";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Debug;
+		};
+		0E8856C41DFB17B6001FD2CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/Kanagata/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mikeneko-app.Kanagata";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Release;
+		};
+		0E8856C61DFB17B6001FD2CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = ZA482485NV;
+				INFOPLIST_FILE = KanagataTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mikeneko-app.Kanagata";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_VERSION = 3.0;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		0E8856C71DFB17B6001FD2CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = ZA482485NV;
+				INFOPLIST_FILE = KanagataTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mikeneko-app.Kanagata";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_VERSION = 3.0;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		0E8856D41DFB184E001FD2CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Kanagata/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mikeneko-app.Kanagata";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		0E8856D51DFB184E001FD2CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Kanagata/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mikeneko-app.Kanagata";
+				PRODUCT_NAME = "$(PROJECT_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -414,7 +901,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0E466B421DF85BDD00CE6C49 /* Build configuration list for PBXNativeTarget "Kanagata" */ = {
+		0E466B421DF85BDD00CE6C49 /* Build configuration list for PBXNativeTarget "Kanagata-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0E466B431DF85BDD00CE6C49 /* Debug */,
@@ -423,7 +910,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0E466B451DF85BDD00CE6C49 /* Build configuration list for PBXNativeTarget "KanagataTests" */ = {
+		0E466B451DF85BDD00CE6C49 /* Build configuration list for PBXNativeTarget "KanagataTests-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0E466B461DF85BDD00CE6C49 /* Debug */,
@@ -431,6 +918,46 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		0E8856A51DFB1674001FD2CB /* Build configuration list for PBXNativeTarget "Kanagata-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E8856A61DFB1674001FD2CB /* Debug */,
+				0E8856A71DFB1674001FD2CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		0E8856A81DFB1674001FD2CB /* Build configuration list for PBXNativeTarget "Kanagata-macOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E8856A91DFB1674001FD2CB /* Debug */,
+				0E8856AA1DFB1674001FD2CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		0E8856C21DFB17B6001FD2CB /* Build configuration list for PBXNativeTarget "Kanagata-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E8856C31DFB17B6001FD2CB /* Debug */,
+				0E8856C41DFB17B6001FD2CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		0E8856C51DFB17B6001FD2CB /* Build configuration list for PBXNativeTarget "Kanagata-tvOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E8856C61DFB17B6001FD2CB /* Debug */,
+				0E8856C71DFB17B6001FD2CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		0E8856D31DFB184E001FD2CB /* Build configuration list for PBXNativeTarget "Kanagata-watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E8856D41DFB184E001FD2CB /* Debug */,
+				0E8856D51DFB184E001FD2CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
