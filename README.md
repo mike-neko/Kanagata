@@ -3,7 +3,7 @@
 [![GitHubのライセンス](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mike-neko/Kanagata/master/LICENSE)
 [![Build Status](https://travis-ci.org/mike-neko/Kanagata.svg?branch=master)](https://travis-ci.org/mike-neko/Kanagata)
 [![codecov](https://codecov.io/gh/mike-neko/Kanagata/branch/master/graph/badge.svg)](https://codecov.io/gh/mike-neko/Kanagata)
-
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/mike-neko/Kanagata)
 
 `Kanagata`はJSONのデコードとエンコードを行えるSwift3.0で書かれたライブラリです。
 
