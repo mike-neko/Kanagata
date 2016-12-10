@@ -18,8 +18,20 @@ Swiftの安全性とJSONの柔軟性をほどよく組み合わせつつ、直�
 - タイプセーフ
 
 ## インストール
+### Carthage
+1\. プロジェクトの`Cartfile`に以下を追記してください。
+```
+github "mike-neko/Kanagata"
+```
+
+2\. フレームワークを`import`してください。
+```
+import Kanagata
+```
+
 ### 手動
-`Kanagata/JSON.swift`をプロジェクトに追加するだけです。
+フレームワークを使わずに利用ができます。   
+その場合は`Kanagata/JSON.swift`をプロジェクトに追加するだけです。
 
 ## 使い方
 
