@@ -1,5 +1,6 @@
 # Kanagata
 
+[![GitHubのライセンス](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/mike-neko/Kanagata/master/LICENSE)
 [![Build Status](https://travis-ci.org/mike-neko/Kanagata.svg?branch=master)](https://travis-ci.org/mike-neko/Kanagata)
 [![codecov](https://codecov.io/gh/mike-neko/Kanagata/branch/master/graph/badge.svg)](https://codecov.io/gh/mike-neko/Kanagata)
 
@@ -83,8 +84,3 @@ let jsonData = try json.data()
 ```
 
 もし、指定したフォーマットと一致しない場合は例外が発生します。
-
-
-## ライセンス
-
-MIT
