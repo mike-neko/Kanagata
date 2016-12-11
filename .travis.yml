@@ -5,6 +5,7 @@ before_install:
   - brew install swiftlint
 script:
   - set -o pipefail
+  - pod lib lint --allow-warnings
   - swiftlint
   - xcodebuild test -scheme Kanagata-iOS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 5,OS=9.0' | xcpretty -c
   - xcodebuild test -scheme Kanagata-iOS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 5,OS=10.0' | xcpretty -c
