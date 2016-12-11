@@ -4,6 +4,9 @@
 [![Build Status](https://travis-ci.org/mike-neko/Kanagata.svg?branch=master)](https://travis-ci.org/mike-neko/Kanagata)
 [![codecov](https://codecov.io/gh/mike-neko/Kanagata/branch/master/graph/badge.svg)](https://codecov.io/gh/mike-neko/Kanagata)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/mike-neko/Kanagata)
+[![CocoaPods](https://img.shields.io/cocoapods/v/Kanagata.svg)](http://cocoadocs.org/docsets/Kanagata)
+[![CocoaPods](https://img.shields.io/cocoapods/p/Kanagata.svg)](http://cocoadocs.org/docsets/Kanagata)
+
 
 `Kanagata`はJSONのデコードとエンコードを行えるSwift3.0で書かれたライブラリです。
 
@@ -22,6 +25,17 @@ Swiftの安全性とJSONの柔軟性をほどよく組み合わせつつ、直�
 1\. プロジェクトの`Cartfile`に以下を追記してください。
 ```
 github "mike-neko/Kanagata"
+```
+
+2\. フレームワークを`import`してください。
+```
+import Kanagata
+```
+
+### CocoaPods
+1\. プロジェクトの`Podfile`に以下を追記してください。
+```
+pod 'Kanagata'
 ```
 
 2\. フレームワークを`import`してください。
