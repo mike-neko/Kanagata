@@ -97,7 +97,7 @@ json["error"]["code"]           // 100
 ただし、フォーマットと一致する型のみ設定できます。
 
 ```
-json["age"] = 21        // 21に更新
+json["age"] = JSONData.value(21)        // 21に更新
 ```
 
 ### JSONへ変換する
