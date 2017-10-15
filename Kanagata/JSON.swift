@@ -96,6 +96,11 @@ public func += (left: inout JSON.Format, right: JSON.Format) {
 public class JSON {
     public typealias Format = [JSONData.Key: JSONData.ValueType]
 
+    /// 空のJSONオブジェクト
+    // swiftlint:disable force_try
+    static let empty = try! JSON(string: "{}", format: [:])
+    // swiftlint:enable force_try
+
     // MARK: - Property
 
     private static let RootKey = "root"                         // トップオブジェクトのキー名
@@ -226,17 +231,28 @@ public class JSON {
         root = JSONData(key: JSON.RootKey, data: .object([:]), type: .object([:]))
     }
 
+    /// 指定したjsonから指定したキーのデータをコピーする
+    ///
+    /// - Parameters:
+    ///   - source: コピー元のJSON
+    ///   - keyList: コピー対象となるキーリスト
+    public func copy(source: JSON, keyList: [JSONData.Key]) {
+        keyList.forEach {
+            self[$0].data = source[$0].data
+        }
+    }
+
     // MARK: - Default
     /// 各データ型ごとの値の取得時のデフォルト値
     public struct Default {
         /// Stringの値の取得時のデフォルト値
-        static var stringValue = ""
+        public static var stringValue = ""
         /// Intの値の取得時のデフォルト値
-        static var intValue = Int(0)
+        public static var intValue = Int(0)
         /// Doubleの値の取得時のデフォルト値
-        static var doubleValue = Double(0)
+        public static var doubleValue = Double(0)
         /// Boolの値の取得時のデフォルト値
-        static var boolValue = false
+        public static var boolValue = false
     }
 
     // MARK: - Error
