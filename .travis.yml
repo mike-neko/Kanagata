@@ -8,8 +8,9 @@ script:
   - set -o pipefail
   - pod lib lint --allow-warnings
   - swiftlint
-  - xcodebuild test -scheme Kanagata-iOS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone SE,OS=9.0' | xcpretty -c
+  - xcodebuild test -scheme Kanagata-iOS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 5,OS=9.0' | xcpretty -c
   - xcodebuild test -scheme Kanagata-iOS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone SE,OS=10.0' | xcpretty -c
+  - xcodebuild test -scheme Kanagata-iOS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone X,OS=11.0' | xcpretty -c
   - xcodebuild test -scheme Kanagata-macOS -destination 'platform=OS X' | xcpretty -c
   - xcodebuild test -scheme Kanagata-tvOS -destination 'platform=tvOS Simulator,name=Apple TV 1080p' | xcpretty -c
 after_success:
