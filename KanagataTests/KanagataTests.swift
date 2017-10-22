@@ -1416,4 +1416,25 @@ class KanagataTests: XCTestCase {
         XCTAssertThrowsError(try JSON(skeletonFormat: [Key.obj: .object([Key.arr: .array(.forWrap)])]))
 
     }
+    
+    func testCopy() {
+        do {    // 基本形のコピー
+            guard let source = try? JSON(string: basicTypeText, format: basicTypeFormat) else {
+                XCTFail()
+                return
+            }
+            
+            guard let dest = try? JSON(skeletonFormat: basicTypeFormat) else {
+                XCTFail()
+                return
+            }
+            
+            dest.copy(source: source, keyList: [Key.str, Key.int, Key.double, Key.boolTrue])
+            XCTAssertEqual(try! source[Key.str].stringValue(), try? dest[Key.str].stringValue())
+            XCTAssertEqual(try! source[Key.int].intValue(), try? dest[Key.int].intValue())
+            XCTAssertEqual(try! source[Key.double].doubleValue(), try? dest[Key.double].doubleValue())
+            XCTAssertEqual(try! source[Key.boolTrue].boolValue(), try? dest[Key.boolTrue].boolValue())
+            XCTAssertFalse(dest[Key.boolFalse].exists)
+        }
+    }
 }
