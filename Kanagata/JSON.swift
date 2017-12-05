@@ -192,6 +192,22 @@ public class JSON {
         set { root[key] = newValue }
     }
 
+    public subscript(key: JSONData.Key, default value: String) -> String {
+        return self[key].value(default: value)
+    }
+
+    public subscript(key: JSONData.Key, default value: Int) -> Int {
+        return self[key].value(default: value)
+    }
+
+    public subscript(key: JSONData.Key, default value: Double) -> Double {
+        return self[key].value(default: value)
+    }
+
+    public subscript(key: JSONData.Key, default value: Bool) -> Bool {
+        return self[key].value(default: value)
+    }
+
     /// jsonデータの変更や操作時のエラー内容を取得したい時用
     ///
     /// - parameter block: エラーを補足したい一連の処理を記述したクロージャ
@@ -375,6 +391,22 @@ public class JSONData {
         }
     }
 
+    public subscript(key: Key, default value: String) -> String {
+        return self[key].value(default: value)
+    }
+
+    public subscript(key: Key, default value: Int) -> Int {
+        return self[key].value(default: value)
+    }
+
+    public subscript(key: Key, default value: Double) -> Double {
+        return self[key].value(default: value)
+    }
+
+    public subscript(key: Key, default value: Bool) -> Bool {
+        return self[key].value(default: value)
+    }
+
     public subscript(index: Int) -> JSONData {
         get {
             if case .array(let arr) = data {
@@ -416,6 +448,22 @@ public class JSONData {
                 return
             }
         }
+    }
+
+    public subscript(index: Int, default value: String) -> String {
+        return self[index].value(default: value)
+    }
+
+    public subscript(index: Int, default value: Int) -> Int {
+        return self[index].value(default: value)
+    }
+
+    public subscript(index: Int, default value: Double) -> Double {
+        return self[index].value(default: value)
+    }
+
+    public subscript(index: Int, default value: Bool) -> Bool {
+        return self[index].value(default: value)
     }
 
     /// jsonデータからStringを取得する

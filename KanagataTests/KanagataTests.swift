@@ -99,6 +99,7 @@ class KanagataTests: XCTestCase {
         static let arrStr = DQ(Key.arrStr) + ":" + "[\"a\",\"b\",\"c\"]"
         static let arrInt = DQ(Key.arrInt) + ":" + "[0, 1, 2]"
         static let arrDouble = DQ(Key.arrDouble) + ":" + "[1.0, 1.1, 1.2]"
+        static let arrBool = DQ(Key.arrBool) + ":" + "[true, false]"
     }
 
     /*
@@ -1436,5 +1437,74 @@ class KanagataTests: XCTestCase {
             XCTAssertEqual(try! source[Key.boolTrue].boolValue(), try? dest[Key.boolTrue].boolValue())
             XCTAssertFalse(dest[Key.boolFalse].exists)
         }
+    }
+    func testDefaultDictionary() {
+        let j: JSON
+        do {
+            var dic = basicTypeDictionary
+            nullTypeDictionary.forEach {
+                dic[$0.key] = $0.value
+            }
+            dic[Key.obj] = basicTypeDictionary
+            let objFormat: JSON.Format = [
+                Key.obj: .object(basicTypeFormat)
+            ]
+            let data = try JSONSerialization.data(withJSONObject: dic, options: [])
+            j = try JSON(data: data, format: basicTypeFormat + nullTypeFormat + objFormat)
+        } catch {
+            XCTFail()
+            return
+        }
+        XCTAssertEqual(j[Key.str, default: Value.str + "error"], Value.str)
+        XCTAssertEqual(j[Key.strN, default: Value.str], Value.str)
+        XCTAssertEqual(j[Key.strNo, default: Value.str], Value.str)
+        XCTAssertEqual(j[Key.int, default: Value.int + 1], Value.int)
+        XCTAssertEqual(j[Key.intN, default: Value.int], Value.int)
+        XCTAssertEqual(j[Key.intNo, default: Value.int], Value.int)
+        XCTAssertEqual(j[Key.double, default: Value.double + 1], Value.double)
+        XCTAssertEqual(j[Key.doubleN, default: Value.double], Value.double)
+        XCTAssertEqual(j[Key.doubleNo, default: Value.double], Value.double)
+        XCTAssertEqual(j[Key.boolFalse, default: Value.boolTrue], Value.boolFalse)
+        XCTAssertEqual(j[Key.boolN, default: Value.bool], Value.bool)
+        XCTAssertEqual(j[Key.boolNo, default: Value.bool], Value.bool)
+        XCTAssertEqual(j[Key.obj][Key.str, default: Value.str + "error"], Value.str)
+        XCTAssertEqual(j[Key.obj][Key.strN, default: Value.str], Value.str)
+        XCTAssertEqual(j[Key.obj][Key.strNo, default: Value.str], Value.str)
+        XCTAssertEqual(j[Key.obj][Key.int, default: Value.int + 1], Value.int)
+        XCTAssertEqual(j[Key.obj][Key.intN, default: Value.int], Value.int)
+        XCTAssertEqual(j[Key.obj][Key.intNo, default: Value.int], Value.int)
+        XCTAssertEqual(j[Key.obj][Key.double, default: Value.double + 1], Value.double)
+        XCTAssertEqual(j[Key.obj][Key.doubleN, default: Value.double], Value.double)
+        XCTAssertEqual(j[Key.obj][Key.doubleNo, default: Value.double], Value.double)
+        XCTAssertEqual(j[Key.obj][Key.boolFalse, default: Value.boolTrue], Value.boolFalse)
+        XCTAssertEqual(j[Key.obj][Key.boolN, default: Value.bool], Value.bool)
+        XCTAssertEqual(j[Key.obj][Key.boolNo, default: Value.bool], Value.bool)
+    }
+    func testDefaultArray() {
+        let j: JSON
+        do {
+            let arr = [StrData.arrStr, StrData.arrInt, StrData.arrDouble, StrData.arrBool, DQ("null") + ":[null]"].joined(separator: ",")
+            let text = "{" + arr + "}"
+            let format: JSON.Format = [
+                Key.arrStr: .array(.string), Key.arrInt: .array(.int), Key.arrDouble: .array(.double), Key.arrBool: .array(.bool),
+                "null": .array(.stringOrNull)
+            ]
+            j = try JSON(string: text, format: format)
+        } catch {
+            XCTFail()
+            return
+        }
+        XCTAssertEqual(j[Key.arrStr][0, default: "a" + "1"], "a")
+        XCTAssertEqual(j[Key.arrStr][1000, default: "a"], "a")
+        XCTAssertEqual(j[Key.arrInt][1, default: 1 + 1], 1)
+        XCTAssertEqual(j[Key.arrInt][1000, default: 1], 1)
+        XCTAssertEqual(j[Key.arrDouble][2, default: 1.2 + 1], 1.2)
+        XCTAssertEqual(j[Key.arrDouble][1000, default: 1.2], 1.2)
+        XCTAssertEqual(j[Key.arrBool][0, default: false], true)
+        XCTAssertEqual(j[Key.arrBool][1000, default: false], false)
+        XCTAssertEqual(j["null"][0, default: "a"], "a")
+        XCTAssertEqual(j["null"][0, default: 1], 1)
+        XCTAssertEqual(j["null"][0, default: 1.5], 1.5)
+        XCTAssertEqual(j["null"][0, default: false], false)
     }
 }
