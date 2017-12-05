@@ -1438,6 +1438,7 @@ class KanagataTests: XCTestCase {
             XCTAssertFalse(dest[Key.boolFalse].exists)
         }
     }
+
     func testDefaultDictionary() {
         let j: JSON
         do {
@@ -1455,6 +1456,7 @@ class KanagataTests: XCTestCase {
             XCTFail()
             return
         }
+
         XCTAssertEqual(j[Key.str, default: Value.str + "error"], Value.str)
         XCTAssertEqual(j[Key.strN, default: Value.str], Value.str)
         XCTAssertEqual(j[Key.strNo, default: Value.str], Value.str)
@@ -1467,6 +1469,7 @@ class KanagataTests: XCTestCase {
         XCTAssertEqual(j[Key.boolFalse, default: Value.boolTrue], Value.boolFalse)
         XCTAssertEqual(j[Key.boolN, default: Value.bool], Value.bool)
         XCTAssertEqual(j[Key.boolNo, default: Value.bool], Value.bool)
+
         XCTAssertEqual(j[Key.obj][Key.str, default: Value.str + "error"], Value.str)
         XCTAssertEqual(j[Key.obj][Key.strN, default: Value.str], Value.str)
         XCTAssertEqual(j[Key.obj][Key.strNo, default: Value.str], Value.str)
@@ -1480,6 +1483,7 @@ class KanagataTests: XCTestCase {
         XCTAssertEqual(j[Key.obj][Key.boolN, default: Value.bool], Value.bool)
         XCTAssertEqual(j[Key.obj][Key.boolNo, default: Value.bool], Value.bool)
     }
+
     func testDefaultArray() {
         let j: JSON
         do {
@@ -1494,6 +1498,7 @@ class KanagataTests: XCTestCase {
             XCTFail()
             return
         }
+
         XCTAssertEqual(j[Key.arrStr][0, default: "a" + "1"], "a")
         XCTAssertEqual(j[Key.arrStr][1000, default: "a"], "a")
         XCTAssertEqual(j[Key.arrInt][1, default: 1 + 1], 1)
@@ -1502,9 +1507,11 @@ class KanagataTests: XCTestCase {
         XCTAssertEqual(j[Key.arrDouble][1000, default: 1.2], 1.2)
         XCTAssertEqual(j[Key.arrBool][0, default: false], true)
         XCTAssertEqual(j[Key.arrBool][1000, default: false], false)
+
         XCTAssertEqual(j["null"][0, default: "a"], "a")
         XCTAssertEqual(j["null"][0, default: 1], 1)
         XCTAssertEqual(j["null"][0, default: 1.5], 1.5)
         XCTAssertEqual(j["null"][0, default: false], false)
     }
+
 }
