@@ -31,9 +31,9 @@ import Foundation
 
 // MARK: - extension
 public extension String {
-    /// jsonデータからStringを生成する
+    /// JSONデータからStringを生成する
     ///
-    /// - parameter json: Stringの値が入ったjsonデータ
+    /// - parameter json: Stringの値が入ったJSONデータ
     /// - returns: Stringのデータ。型が違うなどでデータが取り出せない場合は`nil`
     init?(json: JSONData) {
         guard let value = try? json.stringValue() else { return nil }
@@ -42,9 +42,9 @@ public extension String {
 }
 
 public extension Int {
-    /// jsonデータからIntを生成する
+    /// JSONデータからIntを生成する
     ///
-    /// - parameter json: Intの値が入ったjsonデータ
+    /// - parameter json: Intの値が入ったJSONデータ
     /// - returns: Intのデータ。型が違うなどでデータが取り出せない場合は`nil`
     init?(json: JSONData) {
         guard let value = try? json.intValue() else { return nil }
@@ -53,9 +53,9 @@ public extension Int {
 }
 
 public extension Double {
-    /// jsonデータからDoubleを生成する
+    /// JSONデータからDoubleを生成する
     ///
-    /// - parameter json: Doubleの値が入ったjsonデータ
+    /// - parameter json: Doubleの値が入ったJSONデータ
     /// - returns: Doubleのデータ。型が違うなどでデータが取り出せない場合は`nil`
     init?(json: JSONData) {
         guard let value = try? json.doubleValue() else { return nil }
@@ -64,9 +64,9 @@ public extension Double {
 }
 
 public extension Bool {
-    /// jsonデータからBoolを生成する
+    /// JSONデータからBoolを生成する
     ///
-    /// - parameter json: Boolの値が入ったjsonデータ
+    /// - parameter json: Boolの値が入ったJSONデータ
     /// - returns: Boolのデータ。型が違うなどでデータが取り出せない場合は`nil`
     init?(json: JSONData) {
         guard let value = try? json.boolValue() else { return nil }
@@ -109,10 +109,10 @@ public class JSON {
 
     // MARK: - Method
 
-    /// Dataからjsonデータを生成する
+    /// DataからJSONデータを生成する
     ///
     /// - parameter data:     生成元となるData。JSONSerialization.jsonObjectで変換できるデータであること
-    /// - parameter format:   生成するjsonのフォーマット
+    /// - parameter format:   生成するJSONのフォーマット
     ///
     /// - throws: `JSON.ExceptionType.createObjectError` : 変換に失敗した場合<br>
     ///           `JSON.ExceptionType.typeUnmatch` : フォーマットと一致しなかった場合
@@ -132,11 +132,11 @@ public class JSON {
         root = JSONData(key: define.0, data: value, type: define.1)
     }
 
-    /// JSON文字列からjsonデータを生成する
+    /// JSON文字列からJSONデータを生成する
     ///
     /// - parameter string:   変換したいJSON文字列
     /// - parameter using:    JSON文字列で利用しているエンコード
-    /// - parameter format:   生成するjsonのフォーマット
+    /// - parameter format:   生成するJSONのフォーマット
     /// - throws: `JSON.ExceptionType.encodingError` : エンコードに失敗した場合<br>
     ///           `JSON.ExceptionType.createObjectError` : 変換に失敗した場合<br>
     ///           `JSON.ExceptionType.typeUnmatch` : フォーマットと一致しなかった場合
@@ -148,9 +148,9 @@ public class JSON {
         try self.init(data: data, format: format)
     }
 
-    /// 空の状態のjsonデータを生成する
+    /// 空の状態のJSONデータを生成する
     ///
-    /// - parameter skeletonFormat:   生成するjsonのフォーマット
+    /// - parameter skeletonFormat:   生成するJSONのフォーマット
     /// - throws: `JSON.ExceptionType.typeUnmatch` : フォーマットが不正な場合
     public init(skeletonFormat: Format) throws {
         let define: JSONData.ObjectDefine = (key: JSON.RootKey, type: .object(skeletonFormat))
@@ -162,9 +162,9 @@ public class JSON {
         root = JSONData(key: define.0, data: value, type: define.1)
     }
 
-    /// jsonデータからDataを生成する
+    /// JSONデータからDataを生成する
     ///
-    /// - throws: `JSON.ExceptionType.includeErrorData` : jsonデータ内にエラーデータがある場合<br>
+    /// - throws: `JSON.ExceptionType.includeErrorData` : JSONデータ内にエラーデータがある場合<br>
     ///           `Error` : 変換に失敗した場合
     /// - returns: 生成されたData
     public func data() throws -> Data {
@@ -173,10 +173,10 @@ public class JSON {
         return data
     }
 
-    /// jsonデータからJSON文字列を生成する
+    /// JSONデータからJSON文字列を生成する
     ///
     /// - parameter using:    JSON文字列のエンコード
-    /// - throws: `JSON.ExceptionType.includeErrorData` : jsonデータ内にエラーデータがある場合<br>
+    /// - throws: `JSON.ExceptionType.includeErrorData` : JSONデータ内にエラーデータがある場合<br>
     ///           `JSON.ExceptionType.encodingError` : エンコードに失敗した場合<br>
     ///           `Error` : 変換に失敗した場合
     /// - returns: 生成されたString
@@ -187,28 +187,56 @@ public class JSON {
         return str
     }
 
+    /// 指定したキーのJSONデータを取得する
+    ///
+    /// - Parameter key: 取得対象のキー
+    /// - returns: 指定したキーのデータ。キーが存在しない時は`ExceptionType.notFound`
     public subscript(key: JSONData.Key) -> JSONData {
         get { return root[key] }
         set { root[key] = newValue }
     }
 
+    /// 指定したキーのJSONデータを`String`型で取得する
+    ///
+    /// - Parameters:
+    ///   - key: 取得対象のキー
+    ///   - value: 指定したキーでデータが取得できなかった場合のデフォルト値
+    /// - returns: 指定したキーのデータ。キーが存在しない、または指定した`String`型ではなかった時はデフォルト値
     public subscript(key: JSONData.Key, default value: String) -> String {
         return self[key].value(default: value)
     }
 
+    /// 指定したキーのJSONデータを`Int`型で取得する
+    ///
+    /// - Parameters:
+    ///   - key: 取得対象のキー
+    ///   - value: 指定したキーでデータが取得できなかった場合のデフォルト値
+    /// - returns: 指定したキーのデータ。キーが存在しない、または指定した`Int`型ではなかった時はデフォルト値
     public subscript(key: JSONData.Key, default value: Int) -> Int {
         return self[key].value(default: value)
     }
 
+    /// 指定したキーのJSONデータを`Double`型で取得する
+    ///
+    /// - Parameters:
+    ///   - key: 取得対象のキー
+    ///   - value: 指定したキーでデータが取得できなかった場合のデフォルト値
+    /// - returns: 指定したキーのデータ。キーが存在しない、または指定した`Double`型ではなかった時はデフォルト値
     public subscript(key: JSONData.Key, default value: Double) -> Double {
         return self[key].value(default: value)
     }
 
+    /// 指定したキーのJSONデータを`Bool`型で取得する
+    ///
+    /// - Parameters:
+    ///   - key: 取得対象のキー
+    ///   - value: 指定したキーでデータが取得できなかった場合のデフォルト値
+    /// - returns: 指定したキーのデータ。キーが存在しない、または指定した`Bool`型ではなかった時はデフォルト値
     public subscript(key: JSONData.Key, default value: Bool) -> Bool {
         return self[key].value(default: value)
     }
 
-    /// jsonデータの変更や操作時のエラー内容を取得したい時用
+    /// JSONデータの変更や操作時のエラー内容を取得したい時用
     ///
     /// - parameter block: エラーを補足したい一連の処理を記述したクロージャ
     /// - throws: 発生したエラー内容。詳細は`JSON.ExceptionType`を参照
@@ -221,7 +249,7 @@ public class JSON {
         }
     }
 
-    /// jsonにobjectを追加する。データ内容が定義と一致しない場合は追加されない
+    /// JSONにobjectを追加する。データ内容が定義と一致しない場合は追加されない
     ///
     /// - note: 既存データがある場合は上書きされる
     /// - parameter key:          追加するobjectのキー名
@@ -234,7 +262,7 @@ public class JSON {
         root.data = val
     }
 
-    /// jsonから指定したキーのobjectを削除する。指定したキーが存在しない場合は何もされない
+    /// JSONから指定したキーのobjectを削除する。指定したキーが存在しない場合は何もされない
     ///
     /// - parameter forKey: 削除したいobjectのキー
     public func removeValue(forKey: JSONData.Key) {
@@ -242,12 +270,12 @@ public class JSON {
         root.data = newData
     }
 
-    /// jsonのobjectを全て削除する
+    /// JSONのobjectを全て削除する
     public func removeAll() {
         root = JSONData(key: JSON.RootKey, data: .object([:]), type: .object([:]))
     }
 
-    /// 指定したjsonから指定したキーのデータをコピーする
+    /// 指定したJSONから指定したキーのデータをコピーする
     ///
     /// - Parameters:
     ///   - source: コピー元のJSON
@@ -308,7 +336,7 @@ public class JSON {
         /// - parameter index: 指定したインデックス
         case outOfRange(parent: JSONData, index: Int)
 
-        /// jsonデータに対してサポートされていない操作をした場合
+        /// JSONデータに対してサポートされていない操作をした場合
         ///
         /// - parameter data: 操作対象のデータ
         case notSupportOperation(data: JSONData)
@@ -339,7 +367,7 @@ public class JSONData {
     public var exists: Bool { return data.exists }
     private var objectDefine: ObjectDefine { return (key, type) }
 
-    /// jsonデータの配列を取得する。`array`であれば`JSONData`の配列を取得し、それ以外は空の配列が取得される
+    /// JSONデータの配列を取得する。`array`であれば`JSONData`の配列を取得し、それ以外は空の配列が取得される
     public var array: [JSONData] {
         guard case .array(let list) = data else { return [] }
         return list
@@ -352,6 +380,10 @@ public class JSONData {
         self.type = type
     }
 
+    /// objectから指定したキーのJSONデータを取得する
+    ///
+    /// - Parameter key: 取得対象のキー
+    /// - returns: 指定したキーのデータ。キーが存在しない時は`ExceptionType.notFound`。objectでは無い時は`ExceptionType.notObject`
     public subscript(key: Key) -> JSONData {
         get {
             if case .object(let objs) = data {
@@ -391,22 +423,50 @@ public class JSONData {
         }
     }
 
+    /// objectから指定したキーのJSONデータを`String`型で取得する
+    ///
+    /// - Parameters:
+    ///   - key: 取得対象のキー
+    ///   - value: 指定したキーでデータが取得できなかった場合のデフォルト値
+    /// - returns: 指定したキーのデータ。キーが存在しない、objectでは無い、または指定した`String`型ではなかった時はデフォルト値
     public subscript(key: Key, default value: String) -> String {
         return self[key].value(default: value)
     }
 
+    /// objectから指定したキーのJSONデータを`Int`型で取得する
+    ///
+    /// - Parameters:
+    ///   - key: 取得対象のキー
+    ///   - value: 指定したキーでデータが取得できなかった場合のデフォルト値
+    /// - returns: 指定したキーのデータ。キーが存在しない、objectでは無い、または指定した`Int`型ではなかった時はデフォルト値
     public subscript(key: Key, default value: Int) -> Int {
         return self[key].value(default: value)
     }
 
+    /// objectから指定したキーのJSONデータを`Double`型で取得する
+    ///
+    /// - Parameters:
+    ///   - key: 取得対象のキー
+    ///   - value: 指定したキーでデータが取得できなかった場合のデフォルト値
+    /// - returns: 指定したキーのデータ。キーが存在しない、objectでは無い、または指定した`Double`型ではなかった時はデフォルト値
     public subscript(key: Key, default value: Double) -> Double {
         return self[key].value(default: value)
     }
 
+    /// objectから指定したキーのJSONデータを`Bool`型で取得する
+    ///
+    /// - Parameters:
+    ///   - key: 取得対象のキー
+    ///   - value: 指定したキーでデータが取得できなかった場合のデフォルト値
+    /// - returns: 指定したキーのデータ。キーが存在しない、objectでは無い、または指定した`Bool`型ではなかった時はデフォルト値
     public subscript(key: Key, default value: Bool) -> Bool {
         return self[key].value(default: value)
     }
 
+    /// arrayから指定したインデックスのJSONデータを取得する
+    ///
+    /// - Parameter index: 取得対象のインデックス
+    /// - returns: 指定したインデックスのデータ。インデックスが存在しない時は`ExceptionType.outOfRange`。arrayでは無い時は`ExceptionType.notArray`
     public subscript(index: Int) -> JSONData {
         get {
             if case .array(let arr) = data {
@@ -450,23 +510,47 @@ public class JSONData {
         }
     }
 
+    /// arrayから指定したインデックスのJSONデータを`String`型で取得する
+    ///
+    /// - Parameters:
+    ///   - index: 取得対象のインデックス
+    ///   - value: 指定したインデックスでデータが取得できなかった場合のデフォルト値
+    /// - returns: 指定したインデックスのデータ。インデックスが存在しない、arrayでは無い、または指定した`String`型ではなかった時はデフォルト値
     public subscript(index: Int, default value: String) -> String {
         return self[index].value(default: value)
     }
 
+    /// arrayから指定したインデックスのJSONデータを`Int`型で取得する
+    ///
+    /// - Parameters:
+    ///   - index: 取得対象のインデックス
+    ///   - value: 指定したインデックスでデータが取得できなかった場合のデフォルト値
+    /// - returns: 指定したインデックスのデータ。インデックスが存在しない、arrayでは無い、または指定した`Int`型ではなかった時はデフォルト値
     public subscript(index: Int, default value: Int) -> Int {
         return self[index].value(default: value)
     }
 
+    /// arrayから指定したインデックスのJSONデータを`Double`型で取得する
+    ///
+    /// - Parameters:
+    ///   - index: 取得対象のインデックス
+    ///   - value: 指定したインデックスでデータが取得できなかった場合のデフォルト値
+    /// - returns: 指定したインデックスのデータ。インデックスが存在しない、arrayでは無い、または指定した`Double`型ではなかった時はデフォルト値
     public subscript(index: Int, default value: Double) -> Double {
         return self[index].value(default: value)
     }
 
+    /// arrayから指定したインデックスのJSONデータを`Bool`型で取得する
+    ///
+    /// - Parameters:
+    ///   - index: 取得対象のインデックス
+    ///   - value: 指定したインデックスでデータが取得できなかった場合のデフォルト値
+    /// - returns: 指定したインデックスのデータ。インデックスが存在しない、arrayでは無い、または指定した`Bool`型ではなかった時はデフォルト値
     public subscript(index: Int, default value: Bool) -> Bool {
         return self[index].value(default: value)
     }
 
-    /// jsonデータからStringを取得する
+    /// JSONデータからStringを取得する
     ///
     /// - throws: `JSON.ExceptionType.typeUnmatch` : 型が一致しなかった場合
     /// - returns: Stringの取得データ
@@ -479,7 +563,7 @@ public class JSONData {
         }
     }
 
-    /// jsonデータからIntを取得する
+    /// JSONデータからIntを取得する
     ///
     /// - throws: `JSON.ExceptionType.typeUnmatch` : 型が一致しなかった場合
     /// - returns: Intの取得データ
@@ -492,7 +576,7 @@ public class JSONData {
         }
     }
 
-    /// jsonデータからDoubleを取得する
+    /// JSONデータからDoubleを取得する
     ///
     /// - throws: `JSON.ExceptionType.typeUnmatch` : 型が一致しなかった場合
     /// - returns: Doubleの取得データ
@@ -505,7 +589,7 @@ public class JSONData {
         }
     }
 
-    /// jsonデータからBoolを取得する
+    /// JSONデータからBoolを取得する
     ///
     /// - throws: `JSON.ExceptionType.typeUnmatch` : 型が一致しなかった場合
     /// - returns: Boolの取得データ
@@ -518,25 +602,25 @@ public class JSONData {
         }
     }
 
-    /// jsonデータからStringを取得する。型が違うなどで取得に失敗した場合は指定されたデフォルト値を返す
+    /// JSONデータからStringを取得する。型が違うなどで取得に失敗した場合は指定されたデフォルト値を返す
     ///
     /// - parameter default: 取得失敗時に返すデフォルト値
     /// - returns: Stringの取得データ。存在しない場合はデフォルト値
     public func value(default: String = JSON.Default.stringValue) -> String { return String(json: self) ?? `default` }
 
-    /// jsonデータからIntを取得する。型が違うなどで取得に失敗した場合は指定されたデフォルト値を返す
+    /// JSONデータからIntを取得する。型が違うなどで取得に失敗した場合は指定されたデフォルト値を返す
     ///
     /// - parameter default: 取得失敗時に返すデフォルト値
     /// - returns: Intの取得データ。存在しない場合はデフォルト値
     public func value(default: Int = JSON.Default.intValue) -> Int { return Int(json: self) ?? `default` }
 
-    /// jsonデータからDoubleを取得する。型が違うなどで取得に失敗した場合は指定されたデフォルト値を返す
+    /// JSONデータからDoubleを取得する。型が違うなどで取得に失敗した場合は指定されたデフォルト値を返す
     ///
     /// - parameter default: 取得失敗時に返すデフォルト値
     /// - returns: Doubleの取得データ。存在しない場合はデフォルト値
     public func value(default: Double = JSON.Default.doubleValue) -> Double { return Double(json: self) ?? `default` }
 
-    /// jsonデータからBoolを取得する。型が違うなどで取得に失敗した場合は指定されたデフォルト値を返す
+    /// JSONデータからBoolを取得する。型が違うなどで取得に失敗した場合は指定されたデフォルト値を返す
     ///
     /// - parameter default: 取得失敗時に返すデフォルト値
     /// - returns: Boolの取得データ。存在しない場合はデフォルト値
@@ -571,7 +655,7 @@ public class JSONData {
         return data
     }
 
-    /// jsonにobjectを追加する。データ内容が定義と一致しない場合は追加されない
+    /// JSONにobjectを追加する。データ内容が定義と一致しない場合は追加されない
     ///
     /// - parameter key:          追加するobjectのキー名
     /// - parameter type:         追加するobjectの値のタイプ
@@ -582,7 +666,7 @@ public class JSONData {
         }
     }
 
-    /// jsonにarrayを追加する。データ内容が定義と一致しない場合は追加されない
+    /// JSONにarrayを追加する。データ内容が定義と一致しない場合は追加されない
     ///
     /// - parameter array: 追加する配列データ
     public func append(array: [Any]) {
@@ -626,7 +710,7 @@ public class JSONData {
         return .object(objs)
     }
 
-    /// jsonから指定したキーのobjectを削除する。指定したキーが存在しない場合は何もされない
+    /// JSONから指定したキーのobjectを削除する。指定したキーが存在しない場合は何もされない
     ///
     /// - parameter forKey: 削除したいobjectのキー
     public func removeValue(forKey: Key) {
@@ -654,7 +738,7 @@ public class JSONData {
         return child
     }
 
-    /// jsonのobjectを全て削除する
+    /// JSONのobjectを全て削除する
     public func removeAll() {
         switch data {
         case .object(var objs):
