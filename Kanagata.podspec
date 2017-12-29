@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Kanagata"
-  s.version      = "0.1.0"
+  s.version      = "0.1.2"
   s.summary      = "Kanagata is a JSON decoder and encoder in Swift."
   s.homepage     = "https://github.com/mike-neko/Kanagata"
   s.license      = "MIT"
