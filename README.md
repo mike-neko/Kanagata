@@ -110,3 +110,7 @@ let jsonData = try json.data()
 ```
 
 もし、指定したフォーマットと一致しない場合は例外が発生します。
+
+# その他の情報
+- [Wiki](https://github.com/mike-neko/Kanagata/wiki)
+- [CocoaDocs](http://cocoadocs.org/docsets/Kanagata/)
