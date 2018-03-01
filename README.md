@@ -8,7 +8,7 @@
 [![CocoaPods](https://img.shields.io/cocoapods/p/Kanagata.svg)](http://cocoadocs.org/docsets/Kanagata)
 
 
-`Kanagata`はJSONのデコードとエンコードを行えるSwift3.0で書かれたライブラリです。
+`Kanagata`はJSONのデコードとエンコードを行えるSwiftで書かれたライブラリです。
 
 Swiftの安全性とJSONの柔軟性をほどよく組み合わせつつ、直感的に書くことができます。
 
